@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">DegreeApp</string>
+    <string name="opzioni">Opzioni</string>
+    <string name="informazioni">Informazioni</string>
+    <string name="trofei">Trofei</string>
+    <string name="collezione">Collezione</string>
+    <string name="giardino">Giardino</string>
+    <string name="qr_code">QR-CODE</string>
 </resources>
