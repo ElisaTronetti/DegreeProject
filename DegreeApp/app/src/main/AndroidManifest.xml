@@ -28,7 +28,7 @@
             tools:ignore="LockedOrientationActivity">
         </activity>
         <activity
-            android:name=".AchievementsActivity"
+            android:name=".Achievements.AchievementsActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:screenOrientation="userLandscape"
             tools:ignore="LockedOrientationActivity">
