@@ -1,20 +1,27 @@
 package com.example.degreeapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.RoomDatabase;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.degreeapp.Achievements.AchievementsActivity;
+import com.example.degreeapp.Database.Achievement.Achievement;
+import com.example.degreeapp.Database.AppRoomDatabase;
+
 public class MainActivity extends AppCompatActivity {
+
+    public AppRoomDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setButtonsListeners();
+        db = AppRoomDatabase.getDatabase(this);
     }
-
 
     //This is used to hide/show 'Status Bar' & 'System Bar'. Swipe bar to get it as visible.
     @Override
@@ -37,6 +44,41 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, OptionsActivity.class);
+                MainActivity.this.startActivity(intent);
+            }
+        });
+        findViewById(R.id.home_achievements).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AchievementsActivity.class);
+                MainActivity.this.startActivity(intent);
+            }
+        });
+        findViewById(R.id.home_collection).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CollectionActivity.class);
+                MainActivity.this.startActivity(intent);
+            }
+        });
+        findViewById(R.id.home_garden).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, GardenActivity.class);
+                MainActivity.this.startActivity(intent);
+            }
+        });
+        findViewById(R.id.home_information).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, InformationActivity.class);
+                MainActivity.this.startActivity(intent);
+            }
+        });
+        findViewById(R.id.home_qrcode).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ScanActivity.class);
                 MainActivity.this.startActivity(intent);
             }
         });
