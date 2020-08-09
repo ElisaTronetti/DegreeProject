@@ -6,13 +6,15 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.example.degreeapp.Database.Achievement.Achievement;
 import com.example.degreeapp.Database.Achievement.AchievementDAO;
+import com.example.degreeapp.Database.Item.Item;
 import com.example.degreeapp.Database.Item.ItemDAO;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {}, version = 0, exportSchema = false)
+@Database(entities = {Achievement.class, Item.class}, version = 0, exportSchema = false)
 public abstract class AppRoomDatabase extends RoomDatabase {
 
     //get dao reference

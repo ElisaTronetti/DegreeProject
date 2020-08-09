@@ -23,6 +23,14 @@ public class Item {
         this.image_url = image_url;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getUuid() {
         return uuid;
     }
