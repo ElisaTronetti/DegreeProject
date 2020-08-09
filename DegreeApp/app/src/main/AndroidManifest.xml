@@ -21,6 +21,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".OptionsActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="userLandscape"
+            tools:ignore="LockedOrientationActivity">
+        </activity>
+        <activity
+            android:name=".AchievementsActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="userLandscape"
+            tools:ignore="LockedOrientationActivity">
+        </activity>
+        <activity
+            android:name=".InformationActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="userLandscape"
+            tools:ignore="LockedOrientationActivity">
+        </activity>
     </application>
 
 </manifest>
