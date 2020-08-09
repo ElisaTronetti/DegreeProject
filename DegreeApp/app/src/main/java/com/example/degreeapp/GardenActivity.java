@@ -5,11 +5,11 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class InformationActivity extends AppCompatActivity {
+public class GardenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_information);
+        setContentView(R.layout.activity_garden);
     }
 
     //This is used to hide/show 'Status Bar' & 'System Bar'. Swipe bar to get it as visible.
