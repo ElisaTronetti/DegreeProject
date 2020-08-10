@@ -1,5 +1,6 @@
 package com.example.degreeapp.Achievements;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.degreeapp.Database.Achievement.Achievement;
 import com.example.degreeapp.Database.Achievement.AchievementViewModel;
+import com.example.degreeapp.MainActivity;
 import com.example.degreeapp.R;
 
 import java.util.List;
@@ -25,6 +27,7 @@ public class AchievementsActivity extends AppCompatActivity {
         achievementViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(AchievementViewModel.class);
 
         initializeDB();
+        setButtonsListeners();
 
         //create grid layout manager to actually organize elements in a grid layout
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
@@ -69,7 +72,16 @@ public class AchievementsActivity extends AppCompatActivity {
         achievementViewModel.insertAchievement(new Achievement("7", "Achievement7", "no", "no"));
         achievementViewModel.insertAchievement(new Achievement("8", "Achievement8", "no", "no"));
         achievementViewModel.insertAchievement(new Achievement("9", "Achievement9", "no", "no"));
+    }
 
+    private void setButtonsListeners(){
+        findViewById(R.id.achievement_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AchievementsActivity.this, MainActivity.class);
+                AchievementsActivity.this.startActivity(intent);
+            }
+        });
     }
 
 }
