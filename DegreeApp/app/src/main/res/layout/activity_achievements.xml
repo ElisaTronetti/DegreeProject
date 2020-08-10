@@ -9,7 +9,8 @@
    <androidx.recyclerview.widget.RecyclerView
        android:id="@+id/achievement_recycler"
        android:layout_width="match_parent"
-       android:layout_height="match_parent"
+       android:layout_height="wrap_content"
+       app:layout_constraintTop_toTopOf="parent"
        tools:listitem="@layout/widget_achievement">
    </androidx.recyclerview.widget.RecyclerView>
 </androidx.constraintlayout.widget.ConstraintLayout>
