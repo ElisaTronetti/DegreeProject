@@ -19,7 +19,7 @@
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:layout_marginTop="5dp"
-       android:text="I miei trofei"
+       android:text="@string/i_miei_trofei"
        android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
        app:layout_constraintBottom_toTopOf="@+id/achievement_recycler"
        app:layout_constraintEnd_toEndOf="parent"

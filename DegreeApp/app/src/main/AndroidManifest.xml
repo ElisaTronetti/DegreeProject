@@ -50,7 +50,7 @@
             android:screenOrientation="userLandscape"
             tools:ignore="LockedOrientationActivity">
         </activity>
-        <activity android:name=".CollectionActivity"
+        <activity android:name=".Collection.CollectionActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:screenOrientation="userLandscape"
             tools:ignore="LockedOrientationActivity">

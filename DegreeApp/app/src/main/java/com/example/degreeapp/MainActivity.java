@@ -1,14 +1,13 @@
 package com.example.degreeapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.RoomDatabase;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.example.degreeapp.Achievements.AchievementsActivity;
-import com.example.degreeapp.Database.Achievement.Achievement;
+import com.example.degreeapp.Collection.CollectionActivity;
 import com.example.degreeapp.Database.AppRoomDatabase;
 
 public class MainActivity extends AppCompatActivity {
