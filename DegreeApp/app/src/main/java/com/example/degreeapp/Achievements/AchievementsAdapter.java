@@ -28,10 +28,16 @@ public class AchievementsAdapter extends RecyclerView.Adapter<AchievementsAdapte
     @Override
     public void onBindViewHolder(@NonNull AchievementHolder holder, int position) {
         final Achievement currentAchievement = achievements.get(position);
-        //TODO handle image
-        holder.description.setText(currentAchievement.getTitle());
 
-        //TODO handle different look if the achievement is unlocked or not!
+        //TODO handle image
+        if(currentAchievement.isUnlocked()){
+            holder.description.setText(currentAchievement.getTitle());
+        }else{
+            //handle if the current achievement is currently locked
+            holder.image.setImageResource(R.drawable.baseline_lock_black_24dp);
+            holder.description.setText(R.string.bloccato);
+        }
+
     }
 
     @Override
