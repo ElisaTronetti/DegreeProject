@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, CollectionActivity.class);
+                intent.putExtra("only_show", 1);
                 MainActivity.this.startActivity(intent);
             }
         });
