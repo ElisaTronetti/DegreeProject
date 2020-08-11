@@ -6,32 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/collection_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/indietro"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="5dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="@string/la_mia_collezione"
-        android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
-        app:layout_constraintBottom_toTopOf="@+id/collection_recycler"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    </TextView>
+    <include layout="@layout/widget_app_bar"
+        android:id="@+id/app_bar">
+    </include>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/collection_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/collection_back"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar"
         tools:listitem="@layout/widget_collection">
     </androidx.recyclerview.widget.RecyclerView>
 
