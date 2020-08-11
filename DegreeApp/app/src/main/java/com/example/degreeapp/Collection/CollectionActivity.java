@@ -11,9 +11,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.degreeapp.Achievements.AchievementsActivity;
 import com.example.degreeapp.Database.Item.Item;
 import com.example.degreeapp.Database.Item.ItemViewModel;
+import com.example.degreeapp.ItemActivity;
 import com.example.degreeapp.MainActivity;
 import com.example.degreeapp.R;
 
@@ -50,6 +50,10 @@ public class CollectionActivity extends AppCompatActivity {
             @Override
             public void onCollectionItemClickListener(Item item) {
                 Log.e("TEST", item.getTitle());
+                Intent intent = new Intent(CollectionActivity.this, ItemActivity.class);
+                //item id that is needed to initialize the itemActivity
+                intent.putExtra("id", item.getId());
+                CollectionActivity.this.startActivity(intent);
             }
         });
 
