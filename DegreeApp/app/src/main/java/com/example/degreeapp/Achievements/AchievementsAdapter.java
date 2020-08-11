@@ -54,10 +54,11 @@ public class AchievementsAdapter extends RecyclerView.Adapter<AchievementsAdapte
         private ImageView image;
         private TextView description;
 
-        public AchievementHolder(@NonNull View itemView) {
+        AchievementHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.achievement_image);
             description = itemView.findViewById(R.id.achievement_description);
         }
     }
+
 }

@@ -2,6 +2,7 @@ package com.example.degreeapp.Collection;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,6 +42,14 @@ public class CollectionActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<Item> items) {
                 adapter.setItems(items);
+            }
+        });
+
+        //listener to capture the click on a item's card view
+        adapter.setOnCollectionItemClickListener(new CollectionAdapter.OnCollectionItemClickListener() {
+            @Override
+            public void onCollectionItemClickListener(Item item) {
+                Log.e("TEST", item.getTitle());
             }
         });
 

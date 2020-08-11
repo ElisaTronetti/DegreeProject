@@ -17,6 +17,7 @@ import java.util.List;
 
 public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.CollectionHolder>{
     List<Item> items = new ArrayList<>();
+    private OnCollectionItemClickListener onCollectionItemClickListener;
 
     @NonNull
     @Override
@@ -48,10 +49,30 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Co
         private ImageView image;
         private TextView description;
 
-        public CollectionHolder(@NonNull View itemView) {
+        CollectionHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.collection_image);
             description = itemView.findViewById(R.id.collection_description);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if(onCollectionItemClickListener != null){
+                        onCollectionItemClickListener.onCollectionItemClickListener(items.get(position));
+                    }
+                }
+            });
         }
+    }
+
+    //used to have a reference to the item in the activity to implement the behavior when
+    //an item card view is clicked
+    public interface OnCollectionItemClickListener{
+        void onCollectionItemClickListener(Item item);
+    }
+
+    public void setOnCollectionItemClickListener(OnCollectionItemClickListener listener){
+        this.onCollectionItemClickListener = listener;
     }
 }
