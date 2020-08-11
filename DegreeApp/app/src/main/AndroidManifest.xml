@@ -55,6 +55,11 @@
             android:screenOrientation="userLandscape"
             tools:ignore="LockedOrientationActivity">
         </activity>
+        <activity android:name=".ItemActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="userLandscape"
+            tools:ignore="LockedOrientationActivity">
+        </activity>
     </application>
 
 </manifest>
