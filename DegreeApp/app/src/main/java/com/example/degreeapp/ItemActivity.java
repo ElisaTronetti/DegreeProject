@@ -58,7 +58,7 @@ public class ItemActivity extends AppCompatActivity {
     }
 
     private void setButtonsListeners(){
-        findViewById(R.id.item_back).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ItemActivity.this, CollectionActivity.class);
@@ -69,7 +69,7 @@ public class ItemActivity extends AppCompatActivity {
 
     private void setUI(final Item item){
         //TODO handle image
-        ((TextView) findViewById(R.id.item_main_title)).setText(item.getTitle());
+        ((TextView) findViewById(R.id.main_title)).setText(item.getTitle());
         ((TextView) findViewById(R.id.item_title)).setText(item.getTitle());
         ((TextView) findViewById(R.id.item_description)).setText(item.getDescription());
     }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -29,6 +30,7 @@ public class CollectionActivity extends AppCompatActivity {
         itemViewModel =  new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(ItemViewModel.class);
 
         initializeDB();
+        setUI();
         setButtonsListeners();
 
         //create grid layout manager to actually organize elements in a grid layout
@@ -88,12 +90,16 @@ public class CollectionActivity extends AppCompatActivity {
     }
 
     private void setButtonsListeners(){
-        findViewById(R.id.collection_back).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CollectionActivity.this, MainActivity.class);
                 CollectionActivity.this.startActivity(intent);
             }
         });
+    }
+
+    private void setUI(){
+        ((TextView) findViewById(R.id.main_title)).setText(R.string.la_mia_collezione);
     }
 }

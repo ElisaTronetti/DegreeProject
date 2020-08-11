@@ -3,6 +3,7 @@ package com.example.degreeapp.Achievements;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -27,6 +28,7 @@ public class AchievementsActivity extends AppCompatActivity {
         achievementViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(AchievementViewModel.class);
 
         initializeDB();
+        setUI();
         setButtonsListeners();
 
         //create grid layout manager to actually organize elements in a grid layout
@@ -75,13 +77,17 @@ public class AchievementsActivity extends AppCompatActivity {
     }
 
     private void setButtonsListeners(){
-        findViewById(R.id.achievement_back).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AchievementsActivity.this, MainActivity.class);
                 AchievementsActivity.this.startActivity(intent);
             }
         });
+    }
+
+    private void setUI(){
+        ((TextView) findViewById(R.id.main_title)).setText(R.string.i_miei_trofei);
     }
 
 }
