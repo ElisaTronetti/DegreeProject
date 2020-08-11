@@ -14,15 +14,21 @@ import java.util.concurrent.Future;
 public class ItemRepository {
     private ItemDAO itemDAO;
     private LiveData<List<Item>> items;
+    private LiveData<List<Item>> displayed;
 
     ItemRepository(Application application){
         AppRoomDatabase db = AppRoomDatabase.getDatabase(application);
         itemDAO = db.itemDAO();
         items = itemDAO.getAllItems();
+        displayed = itemDAO.getAllDisplayedItems();
     }
 
     LiveData<List<Item>> getAllItems(){
         return items;
+    }
+
+    LiveData<List<Item>> getDisplayedItems(){
+        return displayed;
     }
 
     long insertItem(final Item item){

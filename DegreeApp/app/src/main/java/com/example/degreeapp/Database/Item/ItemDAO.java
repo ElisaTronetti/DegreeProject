@@ -21,4 +21,8 @@ public interface ItemDAO {
 
     @Query("SELECT * FROM items WHERE uuid = :uuid")
     Item getItemByUuid(final String uuid);
+
+    @Query("SELECT * FROM items WHERE displayed IS 1 " +
+            "ORDER BY item_id")
+    LiveData<List<Item>> getAllDisplayedItems();
 }
