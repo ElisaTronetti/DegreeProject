@@ -16,11 +16,14 @@ public class Item {
     private String description;
     private String image_url;
 
+    private boolean displayed;
+
     public Item(final String uuid, final String title, final String description, final String image_url){
         this.uuid = uuid;
         this.title = title;
         this.description = description;
         this.image_url = image_url;
+        this.displayed = false;
     }
 
     public int getId() {
@@ -61,5 +64,13 @@ public class Item {
 
     public void setImage_url(String image_url) {
         this.image_url = image_url;
+    }
+
+    public boolean isDisplayed() {
+        return displayed;
+    }
+
+    public void setDisplayed(final boolean displayed) {
+        this.displayed = displayed;
     }
 }
