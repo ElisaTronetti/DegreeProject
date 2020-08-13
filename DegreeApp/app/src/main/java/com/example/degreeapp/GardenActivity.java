@@ -1,12 +1,19 @@
 package com.example.degreeapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
+import android.view.Display;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.degreeapp.Collection.CollectionActivity;
@@ -27,19 +34,35 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class GardenActivity extends AppCompatActivity {
-    private static final String FILE_NAME = "garden.txt";
+    private static final String FILE_NAME = "garden_config.txt";
 
     private ItemViewModel itemViewModel;
+    private ConstraintLayout layout;
 
-    private Map<Integer, Pair<Integer, Integer>> itemsCoordinates = new HashMap<>();
+    private int xDelta;
+    private int yDelta;
+    private int xCoordinate;
+    private int yCoordinate;
+
+    public Map<Integer, Pair<Integer, Integer>> itemsCoordinates = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_garden);
         itemViewModel =  new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(ItemViewModel.class);
+        layout = findViewById(R.id.garden_layout);
+
+        //get the default position where a new item will spawn
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int defaultX = size.x / 2;
+        int defaultY = size.y / 2;
+
         setButtonsListeners();
 
         Intent intent = getIntent();
@@ -49,17 +72,31 @@ public class GardenActivity extends AppCompatActivity {
                 int itemId = bundle.getInt("id");
                 Item item = itemViewModel.getItemById(itemId);
                 if(item != null){
-                    loadGardenState();
-                    itemsCoordinates.put(item.getId(), new Pair<>(0,0));
+                    //if a new item has to be added, first I load the past data from file
+                    loadDataFromFile();
+                    if(itemsCoordinates.get(item.getId()) == null){
+                        //add the element in the current map (if it is a new element)
+                        itemsCoordinates.put(item.getId(), new Pair<>(defaultX, defaultY));
+                    } else {
+                        //se l'elemento era già presente fa in modo di renderlo noto al bambino!
+                        Toast.makeText(this, "Item già presente", Toast.LENGTH_LONG).show();
+                    }
+                    //saving in file the current status
                     saveGardenState();
                 }
             }
-            else {
-                //do stuff if you have to display the current status (not a new item to display)
-                loadGardenState();
-            }
+            //load data from file
+            loadDataFromFile();
+            //actually draw the garden
+            loadGardenState();
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        saveGardenState();
+        super.onDestroy();
     }
 
     //This is used to hide/show 'Status Bar' & 'System Bar'. Swipe bar to get it as visible.
@@ -129,8 +166,8 @@ public class GardenActivity extends AppCompatActivity {
         }
     }
 
-    //load the information about items and coordinates from file into a map
-    private void loadGardenState(){
+    //read the file to get all the information to build the map
+    private void loadDataFromFile(){
         File file = new File(getFilesDir(), FILE_NAME);
         FileReader fileReader = null;
         try {
@@ -147,10 +184,14 @@ public class GardenActivity extends AppCompatActivity {
             // This response will have Json Format String
             String response = stringBuilder.toString();
             JSONArray jsonArray = new JSONArray(response);
+            Log.e("TEST", String.valueOf(jsonArray.length()));
             for (int i = 0; i < jsonArray.length(); i++) {
                 //fill the map
+
                 JSONObject o = jsonArray.getJSONObject(i);
-                itemsCoordinates.put(o.getInt("id"), new Pair<>(o.getInt("x"), o.getInt("y")));
+                Log.e("TEST", o.toString());
+                int itemId = o.getInt("id");
+                itemsCoordinates.put(itemId, new Pair<>(o.getInt("x"), o.getInt("y")));
             }
 
         } catch (IOException | JSONException e) {
@@ -159,4 +200,58 @@ public class GardenActivity extends AppCompatActivity {
 
     }
 
+    //take data from the map to recreate the view
+    @SuppressLint("ClickableViewAccessibility")
+    private void loadGardenState(){
+            for (Map.Entry<Integer, Pair<Integer, Integer>> entry : itemsCoordinates.entrySet()) {
+
+                //create image view with the src of the actual item
+                ImageView imageView = new ImageView(this);
+                imageView.setId(entry.getKey());
+                //TODO set actual item image
+                imageView.setImageResource(R.drawable.baseline_image_not_supported_black_24dp);
+
+                imageView.setOnTouchListener(onTouchListener());
+
+                imageView.setX(entry.getValue().first);
+                imageView.setY(entry.getValue().second);
+
+                layout.addView(imageView);
+            }
+
+    }
+
+    private View.OnTouchListener onTouchListener(){
+        return new View.OnTouchListener() {
+            @SuppressLint("ClickableViewAccessibility")
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                //TODO inserisci vincoli di movimento di modo che gli elementi non possano essere posizionati fuori dalla view effettiva
+                final int x = (int) event.getRawX();
+                final int y = (int) event.getRawY();
+
+                //handle the movement of the image view
+                switch (event.getActionMasked()) {
+                    case MotionEvent.ACTION_DOWN:
+                        xDelta = (int)v.getX() - x;
+                        yDelta = (int)v.getY() - y;
+                        break;
+
+                    case MotionEvent.ACTION_MOVE:
+                        xCoordinate = (int)event.getRawX() + xDelta;
+                        yCoordinate =(int)event.getRawY() + yDelta;
+                        v.animate()
+                                .x(xCoordinate)
+                                .y(yCoordinate)
+                                .setDuration(0)
+                                .start();
+                        itemsCoordinates.remove(v.getId());
+                        itemsCoordinates.put(v.getId(), new Pair<>(xCoordinate, yCoordinate));
+                        break;
+                }
+                return true;
+
+            }
+        };
+    }
 }
