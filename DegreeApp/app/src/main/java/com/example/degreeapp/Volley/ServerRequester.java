@@ -65,7 +65,7 @@ public class ServerRequester {
     }
 
     public static void getWeatherConditions(final Response.Listener<JSONObject> res, final Response.ErrorListener err, final String longitude, final String latitude){
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, URL_AIR_CHECKR + longitude + "/" + latitude, null, res, err);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, URL_AIR_CHECKR + latitude + "/" + longitude, null, res, err);
         request.setHeader("x-access-token", TOKEN);
         addRequest(request);
     }
