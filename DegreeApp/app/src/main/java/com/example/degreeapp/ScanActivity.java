@@ -35,9 +35,6 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 public class ScanActivity extends AppCompatActivity {
 
     private ZXingScannerView scannerView;
-    private LocationManager locationManager;
-    private Location currentLocation;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +44,7 @@ public class ScanActivity extends AppCompatActivity {
         scannerView = findViewById(R.id.zxscan);
         setButtonListeners();
 
+        //request camera permissions if necessary
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, Const.CAMERA_REQUEST_CODE);
         } else {
@@ -77,6 +75,7 @@ public class ScanActivity extends AppCompatActivity {
         }
     }
 
+    //scan the qr-code with the camera and get the text
     private void starScan() {
         scannerView.setResultHandler(new ZXingScannerView.ResultHandler() {
             @Override
@@ -91,25 +90,23 @@ public class ScanActivity extends AppCompatActivity {
         scannerView.startCamera();
     }
 
+    //get location data from gps
     private void getLocationData() {
-
-        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         boolean isNetworkEnabled = Objects.requireNonNull(locationManager).isProviderEnabled(LocationManager.NETWORK_PROVIDER);
         boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
         if (isNetworkEnabled && isGPSEnabled) {
             Criteria criteria = new Criteria();
             criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+            //check permissions
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(ScanActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, Const.LOCATION_REQUEST_CODE);
             } else {
                 locationManager.requestSingleUpdate(criteria, new LocationListener() {
                     @Override
                     public void onLocationChanged(Location location) {
-                        Log.e("TEST", "change location");
-                        currentLocation = location;
-
-                        getAirData(String.valueOf(currentLocation.getLongitude()), String.valueOf(currentLocation.getLatitude()));
+                        getAirData(String.valueOf(location.getLongitude()), String.valueOf(location.getLatitude()));
                     }
 
                     @Override
@@ -130,12 +127,12 @@ public class ScanActivity extends AppCompatActivity {
         }
     }
 
+    //actually send request to AirCheckr server to get air pollution data
     private void getAirData(final String longitude, final String latitude){
-        Log.e("TEST", longitude);
-        Log.e("TEST", latitude);
         ServerRequester.getWeatherConditions(new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                //TODO handle response with request to my server
                 Log.e("TEST", response.toString());
             }
         }, new Response.ErrorListener() {
@@ -145,6 +142,30 @@ public class ScanActivity extends AppCompatActivity {
                 error.printStackTrace();
             }
         }, longitude, latitude);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case Const.CAMERA_REQUEST_CODE:
+                if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    starScan();
+                } else {
+                    Toast.makeText(ScanActivity.this, "Impossibile continuare, accetta i permessi delle camera", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(ScanActivity.this, MainActivity.class);
+                    ScanActivity.this.startActivity(intent);
+                }
+                break;
+            case Const.LOCATION_REQUEST_CODE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    getLocationData();
+                } else {
+                    Toast.makeText(ScanActivity.this, "Impossibile continuare, accetta i permessi della localizzazione", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(ScanActivity.this, MainActivity.class);
+                    ScanActivity.this.startActivity(intent);
+                }
+        }
     }
 
     private void setButtonListeners(){
@@ -171,29 +192,5 @@ public class ScanActivity extends AppCompatActivity {
                 builder.show();
             }
         });
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode){
-            case Const.CAMERA_REQUEST_CODE:
-                if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    starScan();
-                } else {
-                    Toast.makeText(ScanActivity.this, "Impossibile continuare, accetta i permessi", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(ScanActivity.this, MainActivity.class);
-                    ScanActivity.this.startActivity(intent);
-                }
-                break;
-            case Const.LOCATION_REQUEST_CODE:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    getLocationData();
-                } else {
-                    Toast.makeText(ScanActivity.this, "Impossibile continuare, accetta i permessi", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(ScanActivity.this, MainActivity.class);
-                    ScanActivity.this.startActivity(intent);
-                }
-        }
     }
 }

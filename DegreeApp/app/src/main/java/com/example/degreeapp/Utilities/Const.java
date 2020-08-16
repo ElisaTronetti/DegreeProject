@@ -2,7 +2,7 @@ package com.example.degreeapp.Utilities;
 
 /**
  * Class that contains all the constants that might be helpful in the entire app.
- * Change here the value to value to change it in the entire application. 
+ * Change here the value to value to change it in the entire application.
  */
 public class Const {
 
