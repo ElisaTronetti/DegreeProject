@@ -9,6 +9,7 @@ import android.view.View;
 import com.example.degreeapp.Achievements.AchievementsActivity;
 import com.example.degreeapp.Collection.CollectionActivity;
 import com.example.degreeapp.Database.AppRoomDatabase;
+import com.example.degreeapp.Volley.NetworkSingleton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setButtonsListeners();
         db = AppRoomDatabase.getDatabase(this);
+
+        NetworkSingleton.getInstance(getApplicationContext());
     }
 
     //This is used to hide/show 'Status Bar' & 'System Bar'. Swipe bar to get it as visible.
