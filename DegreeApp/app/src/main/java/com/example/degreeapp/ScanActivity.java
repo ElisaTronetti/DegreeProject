@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.degreeapp.Utilities.Const;
 import com.example.degreeapp.Volley.ServerRequester;
 import com.google.zxing.Result;
 
@@ -32,10 +33,6 @@ import java.util.Objects;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class ScanActivity extends AppCompatActivity {
-
-    private final static int CAMERA_REQUEST_CODE = 123;
-    private final static int LOCATION_REQUEST_CODE = 321;
-    private final static String QRCODE_TEXT = "DGRPP";
 
     private ZXingScannerView scannerView;
     private LocationManager locationManager;
@@ -51,7 +48,7 @@ public class ScanActivity extends AppCompatActivity {
         setButtonListeners();
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, Const.CAMERA_REQUEST_CODE);
         } else {
             starScan();
         }
@@ -85,7 +82,7 @@ public class ScanActivity extends AppCompatActivity {
             @Override
             public void handleResult(Result rawResult) {
                 //data read from qrcode
-                if (rawResult.getText().equals(QRCODE_TEXT)) {
+                if (rawResult.getText().equals(Const.QRCODE_TEXT)) {
                     Log.e("TEST", "Qr code con text corretto");
                     getLocationData();
                 }
@@ -104,7 +101,7 @@ public class ScanActivity extends AppCompatActivity {
             Criteria criteria = new Criteria();
             criteria.setAccuracy(Criteria.ACCURACY_COARSE);
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(ScanActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+                ActivityCompat.requestPermissions(ScanActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, Const.LOCATION_REQUEST_CODE);
             } else {
                 locationManager.requestSingleUpdate(criteria, new LocationListener() {
                     @Override
@@ -180,7 +177,7 @@ public class ScanActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode){
-            case CAMERA_REQUEST_CODE:
+            case Const.CAMERA_REQUEST_CODE:
                 if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     starScan();
                 } else {
@@ -189,7 +186,7 @@ public class ScanActivity extends AppCompatActivity {
                     ScanActivity.this.startActivity(intent);
                 }
                 break;
-            case LOCATION_REQUEST_CODE:
+            case Const.LOCATION_REQUEST_CODE:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     getLocationData();
                 } else {
