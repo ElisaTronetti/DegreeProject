@@ -12,4 +12,24 @@
         android:layout_height="match_parent">
     </me.dm7.barcodescanner.zxing.ZXingScannerView>
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scan_help"
+        android:src="@drawable/baseline_help_outline_black_24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="5dp"
+        android:padding="5dp">
+    </ImageView>
+
+    <Button
+        android:id="@+id/scan_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/indietro"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="5dp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
