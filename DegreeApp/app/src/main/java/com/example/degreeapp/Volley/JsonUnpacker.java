@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.degreeapp.Database.Achievement.Achievement;
 import com.example.degreeapp.Database.Item.Item;
+import com.example.degreeapp.Utilities.WeatherCondition;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -62,5 +63,26 @@ public class JsonUnpacker {
             Log.e("VOLLEY", "Error unpacking item");
         }
         return item;
+    }
+
+    public static WeatherCondition getWeatherCondition(final JSONObject jsonObject){
+        try {
+            JSONArray data = jsonObject.getJSONArray("data");
+            JSONObject specificData = data.getJSONObject(0);
+            JSONObject aqi11 = specificData.getJSONObject("aqi_11");
+            String aqi11Value = aqi11.getString("class");
+
+            if(Integer.parseInt(aqi11Value) <= 3){
+                return WeatherCondition.BAD;
+            } else if(Integer.parseInt(aqi11Value) >= 7){
+                return  WeatherCondition.GOOD;
+            } else {
+                return WeatherCondition.MEDIUM;
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
