@@ -15,12 +15,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.example.degreeapp.Volley.ServerRequester;
 import com.google.zxing.Result;
+
+import org.json.JSONObject;
+
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class ScanActivity extends AppCompatActivity {
 
     private final static int CAMERA_REQUEST_CODE = 123;
+    private final static String QRCODE_TEXT = "DGRPP";
 
     private ZXingScannerView scannerView;
 
@@ -80,9 +87,24 @@ public class ScanActivity extends AppCompatActivity {
         scannerView.setResultHandler(new ZXingScannerView.ResultHandler() {
             @Override
             public void handleResult(Result rawResult) {
-                //data readed from qrcode
-                //TODO handle actual server requests!
-                Log.e("TEST", rawResult.getText());
+                //data read from qrcode
+                if(rawResult.getText().equals(QRCODE_TEXT)){
+                    Log.e("TEST", "Qr code con text corretto");
+
+                    ServerRequester.getWeatherConditions(new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.e("TEST", response.toString());
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.e("SERV", "AirCheckr server error response");
+                            error.printStackTrace();
+                        }
+                    }, "41.9109", "12.4818");
+                }
+
             }
         });
         scannerView.startCamera();
