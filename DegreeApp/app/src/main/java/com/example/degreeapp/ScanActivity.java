@@ -1,6 +1,8 @@
 package com.example.degreeapp;
 
 import android.Manifest;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +10,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -27,6 +30,7 @@ public class ScanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scan);
 
         scannerView = findViewById(R.id.zxscan);
+        setButtonListeners();
 
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED){
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
@@ -44,6 +48,8 @@ public class ScanActivity extends AppCompatActivity {
                 starScan();
             } else {
                 Toast.makeText(ScanActivity.this, "Impossibile continuare, accetta i permessi", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(ScanActivity.this, MainActivity.class);
+                ScanActivity.this.startActivity(intent);
             }
         }
     }
@@ -75,9 +81,36 @@ public class ScanActivity extends AppCompatActivity {
             @Override
             public void handleResult(Result rawResult) {
                 //data readed from qrcode
+                //TODO handle actual server requests!
                 Log.e("TEST", rawResult.getText());
             }
         });
         scannerView.startCamera();
+    }
+
+    private void setButtonListeners(){
+        findViewById(R.id.scan_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ScanActivity.this, MainActivity.class);
+                ScanActivity.this.startActivity(intent);
+            }
+        });
+        //open dialog to help to understand how scan works
+        findViewById(R.id.scan_help).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ScanActivity.this);
+                builder.setTitle(R.string.help_title);
+                builder.setMessage(R.string.help_description);
+
+                builder.setPositiveButton(R.string.capito, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                builder.show();
+            }
+        });
     }
 }
