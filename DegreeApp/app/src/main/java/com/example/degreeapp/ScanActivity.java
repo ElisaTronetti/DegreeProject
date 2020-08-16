@@ -23,6 +23,8 @@ import androidx.core.content.ContextCompat;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.degreeapp.Utilities.Const;
+import com.example.degreeapp.Utilities.WeatherCondition;
+import com.example.degreeapp.Volley.JsonUnpacker;
 import com.example.degreeapp.Volley.ServerRequester;
 import com.google.zxing.Result;
 
@@ -132,8 +134,13 @@ public class ScanActivity extends AppCompatActivity {
         ServerRequester.getWeatherConditions(new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                //TODO handle response with request to my server
-                Log.e("TEST", response.toString());
+                WeatherCondition currentWeatherCondition = JsonUnpacker.getWeatherCondition(response);
+                if(currentWeatherCondition != null){
+                    //TODO ask my server to return a random item!
+                } else {
+                    Log.e("SERV", "Something wrong getting current weather conditions");
+                }
+
             }
         }, new Response.ErrorListener() {
             @Override
