@@ -1,8 +1,11 @@
 package com.example.degreeapp.Collection;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.degreeapp.Database.Item.Item;
 import com.example.degreeapp.R;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +35,22 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Co
     public void onBindViewHolder(@NonNull CollectionHolder holder, int position) {
         final Item currentItem = items.get(position);
 
-        //TODO handle image
         holder.description.setText(currentItem.getTitle());
+        Picasso.get()
+                .load(currentItem.getImage_url())
+                .placeholder(R.drawable.baseline_lock_black_24dp)
+                .error(R.drawable.baseline_image_not_supported_black_24dp)
+                .into(holder.image, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        Log.e("PICASSO", "Image collection ok");
+                    }
 
+                    @Override
+                    public void onError(Exception e) {
+                        Log.e("PICASSO", "Image collection error");
+                    }
+                });
     }
 
     @Override
@@ -63,8 +81,10 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Co
                     }
                 }
             });
+
         }
     }
+
 
     //used to have a reference to the item in the activity to implement the behavior when
     //an item card view is clicked
