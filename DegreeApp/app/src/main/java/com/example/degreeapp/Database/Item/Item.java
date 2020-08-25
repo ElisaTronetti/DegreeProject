@@ -15,22 +15,24 @@ public class Item {
     private String title;
     private String description;
     private String image_url;
+    private String unlocked_time;
 
     private boolean displayed;
 
-    public Item(final String uuid, final String title, final String description, final String image_url){
+    public Item(final String uuid, final String title, final String description, final String image_url, final String unlocked_time){
         this.uuid = uuid;
         this.title = title;
         this.description = description;
         this.image_url = image_url;
         this.displayed = false;
+        this.unlocked_time = unlocked_time;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 
@@ -38,7 +40,7 @@ public class Item {
         return uuid;
     }
 
-    public void setUuid(String uuid) {
+    public void setUuid(final String uuid) {
         this.uuid = uuid;
     }
 
@@ -46,7 +48,7 @@ public class Item {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(final String title) {
         this.title = title;
     }
 
@@ -54,7 +56,7 @@ public class Item {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -62,8 +64,16 @@ public class Item {
         return image_url;
     }
 
-    public void setImage_url(String image_url) {
+    public void setImage_url(final String image_url) {
         this.image_url = image_url;
+    }
+
+    public String getUnlocked_time(){
+        return unlocked_time;
+    }
+
+    public void setUnlocked_time(final String unlocked_time) {
+        this.unlocked_time = unlocked_time;
     }
 
     public boolean isDisplayed() {
