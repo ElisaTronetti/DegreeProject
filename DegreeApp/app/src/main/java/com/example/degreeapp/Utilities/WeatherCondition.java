@@ -4,9 +4,9 @@ package com.example.degreeapp.Utilities;
  * Possible weather conditions
  */
 public enum WeatherCondition {
-    GOOD("Good"),
-    MEDIUM("Medium"),
-    BAD("Bad");
+    GOOD("good"),
+    MEDIUM("medium"),
+    BAD("bad");
 
     private String name;
 
