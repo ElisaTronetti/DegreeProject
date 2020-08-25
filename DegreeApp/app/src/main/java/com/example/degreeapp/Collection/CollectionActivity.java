@@ -109,14 +109,14 @@ public class CollectionActivity extends AppCompatActivity {
 
     //TODO only for debug purposes (delete it when you take data from server!)
     private void initializeDB(){
-        itemViewModel.insertItem(new Item("1", "Item1", "Sono l'item 1", "no"));
-        itemViewModel.insertItem(new Item("2", "Item2", "Sono l'item 2", "no"));
-        itemViewModel.insertItem(new Item("3", "Item3", "Sono l'item 3", "no"));
-        itemViewModel.insertItem(new Item("4", "Item4", "Sono l'item 4", "no"));
-        itemViewModel.insertItem(new Item("5", "Item5", "Sono l'item 5", "no"));
-        itemViewModel.insertItem(new Item("6", "Item6", "Sono l'item 6", "no"));
-        itemViewModel.insertItem(new Item("7", "Item7", "Sono l'item 7", "no"));
-        itemViewModel.insertItem(new Item("8", "Item8", "Sono l'item 8", "no"));
+        itemViewModel.insertItem(new Item("1", "Item1", "Sono l'item 1", "no", "no"));
+        itemViewModel.insertItem(new Item("2", "Item2", "Sono l'item 2", "no", "no"));
+        itemViewModel.insertItem(new Item("3", "Item3", "Sono l'item 3", "no", "no"));
+        itemViewModel.insertItem(new Item("4", "Item4", "Sono l'item 4", "no", "no"));
+        itemViewModel.insertItem(new Item("5", "Item5", "Sono l'item 5", "no", "no"));
+        itemViewModel.insertItem(new Item("6", "Item6", "Sono l'item 6", "no", "no"));
+        itemViewModel.insertItem(new Item("7", "Item7", "Sono l'item 7", "no", "no"));
+        itemViewModel.insertItem(new Item("8", "Item8", "Sono l'item 8", "no", "no"));
     }
 
 
