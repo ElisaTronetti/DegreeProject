@@ -46,7 +46,7 @@ public class ServerRequester {
      * @param err Error listener which receives error data, if any.
      */
     public static void getAchievements(final Response.Listener<JSONObject> res, final Response.ErrorListener err){
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, URL + "/achievements", null, res, err);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, URL + "achievements", null, res, err);
         addRequest(request);
     }
 
@@ -60,7 +60,7 @@ public class ServerRequester {
      */
     //TODO change weather condition, it will be a enum
     public static void getItem(final Response.Listener<JSONObject> res, final Response.ErrorListener err, final String weatherCondition){
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, URL + "/item/" + weatherCondition, null, res, err);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, URL + "item/" + weatherCondition, null, res, err);
         addRequest(request);
     }
 
