@@ -214,8 +214,10 @@ public class ScanActivity extends AppCompatActivity {
                 if(itemViewModel.getItemByUuid(item.getUuid()) == null){
                     Item updatedItem = ImagesHandler.saveImage(item, getApplicationContext());
                     itemViewModel.insertItem(updatedItem);
+                    buildDialog("Bravo!", "Hai trovato " + item.getTitle() + ", è stato aggiunto alla tua collezione.");
                 } else {
                     Log.e("TEST", "Item già posseduto");
+                    buildDialog("Oh no!", "Hai trovato " + item.getTitle() + ", ma lo avevi già collezionato...");
                 }
             }
         }, new Response.ErrorListener() {
@@ -225,5 +227,20 @@ public class ScanActivity extends AppCompatActivity {
                 Log.e("SERV", "Get item server error");
             }
         }, weatherCondition.getName());
+    }
+
+    //dialog displayed when an item is returned successfully
+    private void buildDialog(final String title, final String text){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(text);
+        builder.setNegativeButton("Conferma", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(ScanActivity.this, MainActivity.class);
+                ScanActivity.this.startActivity(intent);
+            }
+        });
+        builder.show();
     }
 }
