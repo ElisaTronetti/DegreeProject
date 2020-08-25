@@ -212,7 +212,6 @@ public class GardenActivity extends AppCompatActivity {
                 imageView.setId(entry.getKey());
 
                 Item item = itemViewModel.getItemById(entry.getKey());
-                //TODO set actual item image
                 Picasso.get()
                         .load(item.getImage_url())
                         .placeholder(R.drawable.baseline_lock_black_24dp)
