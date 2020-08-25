@@ -36,6 +36,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Co
         final Item currentItem = items.get(position);
 
         holder.description.setText(currentItem.getTitle());
+        holder.timestamp.setText(currentItem.getUnlocked_time());
         Picasso.get()
                 .load(currentItem.getImage_url())
                 .placeholder(R.drawable.baseline_lock_black_24dp)
@@ -66,11 +67,13 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Co
     class CollectionHolder extends RecyclerView.ViewHolder{
         private ImageView image;
         private TextView description;
+        private TextView timestamp;
 
         CollectionHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.collection_image);
             description = itemView.findViewById(R.id.collection_description);
+            timestamp = itemView.findViewById(R.id.collection_timestamp);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
