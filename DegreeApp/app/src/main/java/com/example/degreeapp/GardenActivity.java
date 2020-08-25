@@ -19,6 +19,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.degreeapp.Collection.CollectionActivity;
 import com.example.degreeapp.Database.Item.Item;
 import com.example.degreeapp.Database.Item.ItemViewModel;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,7 +39,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class GardenActivity extends AppCompatActivity {
-    private static final String FILE_NAME = "garden_config.txt";
+    private static final String FILE_NAME = "garden_conf.txt";
 
     private ItemViewModel itemViewModel;
     private ConstraintLayout layout;
@@ -208,8 +210,24 @@ public class GardenActivity extends AppCompatActivity {
                 //create image view with the src of the actual item
                 ImageView imageView = new ImageView(this);
                 imageView.setId(entry.getKey());
+
+                Item item = itemViewModel.getItemById(entry.getKey());
                 //TODO set actual item image
-                imageView.setImageResource(R.drawable.baseline_image_not_supported_black_24dp);
+                Picasso.get()
+                        .load(item.getImage_url())
+                        .placeholder(R.drawable.baseline_lock_black_24dp)
+                        .error(R.drawable.baseline_image_not_supported_black_24dp)
+                        .into(imageView, new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                Log.e("PICASSO", "Image garden ok");
+                            }
+
+                            @Override
+                            public void onError(Exception e) {
+                                Log.e("PICASSO", "Image garden error");
+                            }
+                        });
 
                 imageView.setOnTouchListener(onTouchListener());
 
