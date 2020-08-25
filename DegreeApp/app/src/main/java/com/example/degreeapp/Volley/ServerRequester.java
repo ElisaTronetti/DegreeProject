@@ -4,7 +4,6 @@ import androidx.annotation.Nullable;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
 
@@ -58,7 +57,6 @@ public class ServerRequester {
      * @param err Error listener which receives error data, if any.
      * @param weatherCondition actual weather condition, to make sure the server returns the correct image url.
      */
-    //TODO change weather condition, it will be a enum
     public static void getItem(final Response.Listener<JSONObject> res, final Response.ErrorListener err, final String weatherCondition){
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, URL + "item/" + weatherCondition, null, res, err);
         addRequest(request);

@@ -2,7 +2,9 @@ package com.example.degreeapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +13,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.degreeapp.Collection.CollectionActivity;
 import com.example.degreeapp.Database.Item.Item;
 import com.example.degreeapp.Database.Item.ItemViewModel;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 public class ItemActivity extends AppCompatActivity {
     private ItemViewModel itemViewModel;
@@ -34,8 +38,6 @@ public class ItemActivity extends AppCompatActivity {
                 }
             }
         }
-
-
     }
 
     //This is used to hide/show 'Status Bar' & 'System Bar'. Swipe bar to get it as visible.
@@ -59,15 +61,32 @@ public class ItemActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ItemActivity.this, CollectionActivity.class);
+                intent.putExtra("only_show", 1);
                 ItemActivity.this.startActivity(intent);
             }
         });
     }
 
     private void setUI(final Item item){
-        //TODO handle image
         ((TextView) findViewById(R.id.main_title)).setText(item.getTitle());
         ((TextView) findViewById(R.id.item_title)).setText(item.getTitle());
         ((TextView) findViewById(R.id.item_description)).setText(item.getDescription());
+
+        ImageView imageView = findViewById(R.id.item_image);
+        Picasso.get()
+                .load(item.getImage_url())
+                .placeholder(R.drawable.baseline_lock_black_24dp)
+                .error(R.drawable.baseline_image_not_supported_black_24dp)
+                .into(imageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        Log.e("PICASSO", "Image item ok");
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Log.e("PICASSO", "Image item error");
+                    }
+                });
     }
 }

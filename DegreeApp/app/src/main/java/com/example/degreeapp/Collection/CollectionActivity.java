@@ -67,7 +67,6 @@ public class CollectionActivity extends AppCompatActivity {
                         @Override
                         public void onCollectionItemClickListener(Item item) {
                             Intent intent = new Intent(CollectionActivity.this, GardenActivity.class);
-                            //TODO set displayed flag in db as true
                             intent.putExtra("id", item.getId());
                             CollectionActivity.this.startActivity(intent);
                         }
