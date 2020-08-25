@@ -17,4 +17,5 @@
     <string name="help_title">Cosa fare??</string>
     <string name="help_description">Cerca un simbolo simile a un quadrato alla fermata dell\'autobus e inquadralo con attenzione</string>
     <string name="capito">CAPITO</string>
+    <string name="sbloccato_il">Sbloccato il:</string>
 </resources>
