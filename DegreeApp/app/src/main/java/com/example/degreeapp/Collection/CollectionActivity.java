@@ -44,7 +44,6 @@ public class CollectionActivity extends AppCompatActivity {
             }
         });
 
-        initializeDB();
         setUI();
         setBackButtonListener();
 
