@@ -10,8 +10,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Class used to unpack JsonObjects that the server returns
@@ -52,12 +56,14 @@ public class JsonUnpacker {
      */
     public static Item getItem(final JSONObject jsonObject){
         Item item = null;
+        DateFormat df = DateFormat.getDateInstance(DateFormat.LONG, Locale.ITALY);
         try{
             item = new Item(
                     jsonObject.getString("id"),
                     jsonObject.getString("title"),
                     jsonObject.getString("description"),
-                    jsonObject.getString("url"));
+                    jsonObject.getString("url"),
+                    df.format(new Date()));
         } catch (JSONException e){
             e.printStackTrace();
             Log.e("VOLLEY", "Error unpacking item");
