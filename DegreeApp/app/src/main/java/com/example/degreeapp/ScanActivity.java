@@ -19,10 +19,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.degreeapp.Database.Item.Item;
+import com.example.degreeapp.Database.Item.ItemViewModel;
 import com.example.degreeapp.Utilities.Const;
+import com.example.degreeapp.Utilities.ImagesHandler;
 import com.example.degreeapp.Utilities.WeatherCondition;
 import com.example.degreeapp.Volley.JsonUnpacker;
 import com.example.degreeapp.Volley.ServerRequester;
@@ -35,7 +39,7 @@ import java.util.Objects;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class ScanActivity extends AppCompatActivity {
-
+    private ItemViewModel itemViewModel;
     private ZXingScannerView scannerView;
 
     @Override
@@ -45,6 +49,7 @@ public class ScanActivity extends AppCompatActivity {
 
         scannerView = findViewById(R.id.zxscan);
         setButtonListeners();
+        itemViewModel =  new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(ItemViewModel.class);
 
         //request camera permissions if necessary
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED) {
@@ -136,11 +141,10 @@ public class ScanActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 WeatherCondition currentWeatherCondition = JsonUnpacker.getWeatherCondition(response);
                 if(currentWeatherCondition != null){
-                    //TODO ask my server to return a random item!
+                    getItem(currentWeatherCondition);
                 } else {
                     Log.e("SERV", "Something wrong getting current weather conditions");
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -199,5 +203,27 @@ public class ScanActivity extends AppCompatActivity {
                 builder.show();
             }
         });
+    }
+
+    private void getItem(final WeatherCondition weatherCondition){
+        ServerRequester.getItem(new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Item item = JsonUnpacker.getItem(response);
+                Log.e("TEST", item.getTitle());
+                if(itemViewModel.getItemByUuid(item.getUuid()) == null){
+                    Item updatedItem = ImagesHandler.saveImage(item, getApplicationContext());
+                    itemViewModel.insertItem(updatedItem);
+                } else {
+                    Log.e("TEST", "Item già posseduto");
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                Log.e("SERV", "Get item server error");
+            }
+        }, weatherCondition.getName());
     }
 }
