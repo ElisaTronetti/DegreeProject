@@ -12,8 +12,8 @@
 
     <ImageView
         android:id="@+id/item_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:src="@drawable/baseline_image_not_supported_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_bar"
@@ -43,13 +43,21 @@
         android:layout_marginStart="10dp">
     </TextView>
 
-    <TextView
-        android:id="@+id/item_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/descrizione"
-        app:layout_constraintStart_toStartOf="@+id/item_image"
-        app:layout_constraintTop_toBottomOf="@+id/item_image"
-        android:layout_marginTop="20dp">
-    </TextView>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/item_image"
+        app:layout_constraintTop_toBottomOf="@+id/item_title"
+        android:layout_marginStart="10dp">
+
+        <TextView
+            android:id="@+id/item_description"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/descrizione">
+        </TextView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
