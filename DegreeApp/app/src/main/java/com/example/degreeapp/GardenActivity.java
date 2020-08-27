@@ -1,6 +1,7 @@
 package com.example.degreeapp;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
@@ -49,6 +51,8 @@ public class GardenActivity extends AppCompatActivity {
     private int xCoordinate;
     private int yCoordinate;
 
+    private boolean deleteMode = false;
+
     public Map<Integer, Pair<Integer, Integer>> itemsCoordinates = new HashMap<>();
 
     @Override
@@ -80,8 +84,8 @@ public class GardenActivity extends AppCompatActivity {
                         //add the element in the current map (if it is a new element)
                         itemsCoordinates.put(item.getId(), new Pair<>(defaultX, defaultY));
                     } else {
-                        //se l'elemento era già presente fa in modo di renderlo noto al bambino!
-                        Toast.makeText(this, "Item già presente", Toast.LENGTH_LONG).show();
+                        //shows that an item is already in the garden
+                        Toast.makeText(this, "Questo elemento è già presente nel giardino", Toast.LENGTH_LONG).show();
                     }
                     //saving in file the current status
                     saveGardenState();
@@ -99,6 +103,12 @@ public class GardenActivity extends AppCompatActivity {
     protected void onDestroy() {
         saveGardenState();
         super.onDestroy();
+    }
+
+    @Override
+    protected void onStop() {
+        saveGardenState();
+        super.onStop();
     }
 
     //This is used to hide/show 'Status Bar' & 'System Bar'. Swipe bar to get it as visible.
@@ -132,6 +142,17 @@ public class GardenActivity extends AppCompatActivity {
                 Intent intent = new Intent(GardenActivity.this, CollectionActivity.class);
                 intent.putExtra("only_show", 0);
                 GardenActivity.this.startActivity(intent);
+            }
+        });
+        findViewById(R.id.garden_delete).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (deleteMode) {
+                    //delete mode active
+                    deleteMode = false;
+                } else {
+                    deleteMode = true;
+                }
             }
         });
     }
@@ -186,12 +207,10 @@ public class GardenActivity extends AppCompatActivity {
             // This response will have Json Format String
             String response = stringBuilder.toString();
             JSONArray jsonArray = new JSONArray(response);
-            Log.e("TEST", String.valueOf(jsonArray.length()));
             for (int i = 0; i < jsonArray.length(); i++) {
                 //fill the map
 
                 JSONObject o = jsonArray.getJSONObject(i);
-                Log.e("TEST", o.toString());
                 int itemId = o.getInt("id");
                 itemsCoordinates.put(itemId, new Pair<>(o.getInt("x"), o.getInt("y")));
             }
@@ -235,40 +254,71 @@ public class GardenActivity extends AppCompatActivity {
 
                 layout.addView(imageView);
             }
-
     }
 
     private View.OnTouchListener onTouchListener(){
         return new View.OnTouchListener() {
             @SuppressLint("ClickableViewAccessibility")
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                //TODO inserisci vincoli di movimento di modo che gli elementi non possano essere posizionati fuori dalla view effettiva
+            public boolean onTouch(final View v, MotionEvent event) {
                 final int x = (int) event.getRawX();
                 final int y = (int) event.getRawY();
 
                 //handle the movement of the image view
                 switch (event.getActionMasked()) {
                     case MotionEvent.ACTION_DOWN:
-                        xDelta = (int)v.getX() - x;
-                        yDelta = (int)v.getY() - y;
+                        if(deleteMode){
+                            //if delete mode is enabled, build the dialog
+                            buildDialog(v);
+                        } else {
+                            xDelta = (int) v.getX() - x;
+                            yDelta = (int) v.getY() - y;
+                        }
                         break;
 
                     case MotionEvent.ACTION_MOVE:
-                        xCoordinate = (int)event.getRawX() + xDelta;
-                        yCoordinate =(int)event.getRawY() + yDelta;
-                        v.animate()
-                                .x(xCoordinate)
-                                .y(yCoordinate)
-                                .setDuration(0)
-                                .start();
-                        itemsCoordinates.remove(v.getId());
-                        itemsCoordinates.put(v.getId(), new Pair<>(xCoordinate, yCoordinate));
+                        if(!deleteMode) {
+                            xCoordinate = (int) event.getRawX() + xDelta;
+                            yCoordinate = (int) event.getRawY() + yDelta;
+                            v.animate()
+                                    .x(xCoordinate)
+                                    .y(yCoordinate)
+                                    .setDuration(0)
+                                    .start();
+                            itemsCoordinates.remove(v.getId());
+                            itemsCoordinates.put(v.getId(), new Pair<>(xCoordinate, yCoordinate));
+                        }
                         break;
                 }
                 return true;
-
             }
         };
+    }
+
+    //dialog displayed to delete an item
+    private void buildDialog(final View v){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final Item item = itemViewModel.getItemById(v.getId());
+        builder.setTitle("Sicuro?");
+        builder.setMessage("Sei sicuro di voler eliminare dal giardino " + item.getTitle() + " ?");
+
+        builder.setNegativeButton("ANNULLA", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.setPositiveButton("ELIMINA", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                itemsCoordinates.remove(item.getId());
+                v.setVisibility(View.INVISIBLE);
+                saveGardenState();
+                loadDataFromFile();
+                loadGardenState();
+            }
+        });
+        builder.show();
     }
 }
