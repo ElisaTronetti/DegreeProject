@@ -6,7 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/garden_layout"
-    android:layout_gravity="center">
+    android:layout_gravity="center"
+    android:background="@color/background_actionbar">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/garden_background">
+    </ImageView>
 
     <Button
         android:id="@+id/garden_back"

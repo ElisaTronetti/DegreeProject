@@ -233,6 +233,7 @@ public class GardenActivity extends AppCompatActivity {
                 Item item = itemViewModel.getItemById(entry.getKey());
                 Picasso.get()
                         .load(item.getImage_url())
+                        .resize(350,350)
                         .placeholder(R.drawable.baseline_lock_black_24dp)
                         .error(R.drawable.baseline_image_not_supported_black_24dp)
                         .into(imageView, new Callback() {
