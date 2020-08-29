@@ -15,7 +15,8 @@
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        app:layout_constraintTop_toBottomOf="@+id/app_bar"
-       tools:listitem="@layout/widget_achievement">
+       tools:listitem="@layout/widget_achievement"
+       android:paddingBottom="70dp">
    </androidx.recyclerview.widget.RecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
