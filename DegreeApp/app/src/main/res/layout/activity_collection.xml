@@ -10,12 +10,14 @@
         android:id="@+id/app_bar">
     </include>
 
+    <!-- todo set an attribute for the size of the custom action bar-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/collection_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/app_bar"
-        tools:listitem="@layout/widget_collection">
+        tools:listitem="@layout/widget_collection"
+        android:paddingBottom="70dp">
     </androidx.recyclerview.widget.RecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
