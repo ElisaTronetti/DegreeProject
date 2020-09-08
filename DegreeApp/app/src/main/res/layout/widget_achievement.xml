@@ -30,7 +30,7 @@
                     android:id="@+id/achievement_image"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/baseline_image_not_supported_black_24dp"
+                    android:src="@drawable/ic_image_not_supported_black"
                     android:layout_margin="5dp">
                 </androidx.appcompat.widget.AppCompatImageView>
             </androidx.cardview.widget.CardView>

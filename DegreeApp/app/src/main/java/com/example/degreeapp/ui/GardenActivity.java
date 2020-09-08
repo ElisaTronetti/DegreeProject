@@ -234,8 +234,8 @@ public class GardenActivity extends AppCompatActivity {
             Picasso.get()
                     .load(file)
                     .resize(350,350)
-                    .placeholder(R.drawable.baseline_lock_black_24dp)
-                    .error(R.drawable.baseline_image_not_supported_black_24dp)
+                    .placeholder(R.drawable.ic_lock_black)
+                    .error(R.drawable.ic_image_not_supported_black)
                     .into(imageView, new Callback() {
                         @Override
                         public void onSuccess() {

@@ -79,8 +79,8 @@ public class ItemActivity extends AppCompatActivity {
         File file = new File(item.getImage_url());
         Picasso.get()
                 .load(file)
-                .placeholder(R.drawable.baseline_lock_black_24dp)
-                .error(R.drawable.baseline_image_not_supported_black_24dp)
+                .placeholder(R.drawable.ic_lock_black)
+                .error(R.drawable.ic_image_not_supported_black)
                 .into(imageView, new Callback() {
                     @Override
                     public void onSuccess() {

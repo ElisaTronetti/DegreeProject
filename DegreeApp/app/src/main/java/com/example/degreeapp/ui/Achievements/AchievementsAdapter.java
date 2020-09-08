@@ -37,8 +37,8 @@ public class AchievementsAdapter extends RecyclerView.Adapter<AchievementsAdapte
             File file = new File(currentAchievement.getImage_url());
             Picasso.get()
                     .load(file)
-                    .placeholder(R.drawable.baseline_lock_black_24dp)
-                    .error(R.drawable.baseline_image_not_supported_black_24dp)
+                    .placeholder(R.drawable.ic_lock_black)
+                    .error(R.drawable.ic_image_not_supported_black)
                     .into(holder.image, new Callback() {
                         @Override
                         public void onSuccess() {
@@ -53,8 +53,8 @@ public class AchievementsAdapter extends RecyclerView.Adapter<AchievementsAdapte
                     });
             holder.description.setText(currentAchievement.getTitle());
         }else{
-            //handle if the current achievement is currently locked
-            holder.image.setImageResource(R.drawable.baseline_lock_black_24dp);
+            //handle if the achievement is currently locked
+            holder.image.setImageResource(R.drawable.ic_lock_black);
             holder.description.setText(R.string.bloccato);
         }
     }
