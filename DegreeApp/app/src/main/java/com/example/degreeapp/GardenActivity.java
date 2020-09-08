@@ -31,14 +31,11 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class GardenActivity extends AppCompatActivity {
     private static final String FILE_NAME = "garden_conf.txt";
@@ -264,7 +261,7 @@ public class GardenActivity extends AppCompatActivity {
             public boolean onTouch(final View v, MotionEvent event) {
                 final int x = (int) event.getRawX();
                 final int y = (int) event.getRawY();
-
+                
                 //handle the movement of the image view
                 switch (event.getActionMasked()) {
                     case MotionEvent.ACTION_DOWN:
@@ -272,6 +269,7 @@ public class GardenActivity extends AppCompatActivity {
                             //if delete mode is enabled, build the dialog
                             buildDialog(v);
                         } else {
+                            v.bringToFront();
                             xDelta = (int) v.getX() - x;
                             yDelta = (int) v.getY() - y;
                         }
