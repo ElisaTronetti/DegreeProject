@@ -14,7 +14,7 @@ public interface AchievementDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     long insertAchievement(final Achievement achievement);
 
-    @Query("SELECT * FROM achievements ORDER BY achievement_id")
+    @Query("SELECT * FROM achievements ORDER BY requirements")
     LiveData<List<Achievement>> getAllAchievements();
 
     @Query("SELECT * FROM achievements WHERE unlocked IS 1 " +

@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onChanged(List<Achievement> achievements) {
                         for(Achievement achievement : achievements){
                             //unlock item if the requirement is reached
-                            if (!achievement.isUnlocked() && integer <= Integer.parseInt(achievement.getRequirements())){
+                            if (!achievement.isUnlocked() && integer >= Integer.parseInt(achievement.getRequirements())){
                                 //setting an achievement unlocked if the conditions are verified
                                 achievement.setUnlocked(true);
                                 achievementViewModel.updateAchievement(achievement);
