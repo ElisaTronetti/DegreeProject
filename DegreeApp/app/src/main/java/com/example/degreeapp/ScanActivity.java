@@ -2,9 +2,11 @@ package com.example.degreeapp;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -23,17 +25,21 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.example.degreeapp.Database.Item.Item;
 import com.example.degreeapp.Database.Item.ItemViewModel;
 import com.example.degreeapp.Utilities.Const;
-import com.example.degreeapp.Utilities.ImagesHandler;
 import com.example.degreeapp.Utilities.WeatherCondition;
 import com.example.degreeapp.Volley.JsonUnpacker;
+import com.example.degreeapp.Volley.NetworkSingleton;
 import com.example.degreeapp.Volley.ServerRequester;
 import com.google.zxing.Result;
 
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Objects;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -91,6 +97,9 @@ public class ScanActivity extends AppCompatActivity {
                 if (rawResult.getText().equals(Const.QRCODE_TEXT)) {
                     Log.e("TEST", "Qr code con text corretto");
                     getLocationData();
+                } else {
+                    //handle qr code error
+                    buildDialog("Qualcosa non va...", "Il QR Code che hai scannerizzato non è corretto");
                 }
             }
         });
@@ -194,7 +203,6 @@ public class ScanActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ScanActivity.this);
                 builder.setTitle(R.string.help_title);
                 builder.setMessage(R.string.help_description);
-
                 builder.setPositiveButton(R.string.capito, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -210,14 +218,12 @@ public class ScanActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 Item item = JsonUnpacker.getItem(response);
-                Log.e("TEST", item.getTitle());
                 if(itemViewModel.getItemByUuid(item.getUuid()) == null){
-                    Item updatedItem = ImagesHandler.saveImage(item, getApplicationContext());
-                    itemViewModel.insertItem(updatedItem);
+                    saveImage(item);
                     buildDialog("Bravo!", "Hai trovato " + item.getTitle() + ", è stato aggiunto alla tua collezione.");
                 } else {
                     Log.e("TEST", "Item già posseduto");
-                    buildDialog("Oh no!", "Hai trovato " + item.getTitle() + ", ma lo avevi già collezionato...");
+                    buildDialog("Oh no, che sfortuna!", "Hai trovato " + item.getTitle() + ", ma lo avevi già collezionato...");
                 }
             }
         }, new Response.ErrorListener() {
@@ -242,5 +248,50 @@ public class ScanActivity extends AppCompatActivity {
             }
         });
         builder.show();
+    }
+
+    //request the image from the server and save it in the internal storage
+    public void saveImage(final Item item){
+        final String url = item.getImage_url();
+        ImageRequest request = new ImageRequest(url, new Response.Listener<Bitmap>() {
+            @Override
+            public void onResponse(Bitmap response) {
+                String title = url.substring(url.lastIndexOf("/") + 1);
+                String path = saveImageToInternalStorage(title, response);
+                item.setImage_url(path);
+                itemViewModel.insertItem(item);
+            }
+        }, 0, 0, null, null,
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("SERV", "Error downloading the item image from the server");
+                    }
+                }
+        );
+        NetworkSingleton.getInstance(this).addRequestQueue(request);
+    }
+
+    //save the image in the internal storage
+    private String saveImageToInternalStorage(final String title, final Bitmap bitmap){
+        ContextWrapper cw = new ContextWrapper(this);
+        File directory = cw.getDir("images", Context.MODE_PRIVATE);
+        File myPath = new File(directory, title);
+
+        FileOutputStream fos;
+        try {
+            fos = new FileOutputStream(myPath);
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Log.e("TEST", myPath.getAbsolutePath());
+        return myPath.getAbsolutePath();
     }
 }
