@@ -1,8 +1,7 @@
-package com.example.degreeapp.Collection;
+package com.example.degreeapp.ui.Collection;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -14,9 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.degreeapp.Database.Item.Item;
 import com.example.degreeapp.Database.Item.ItemViewModel;
-import com.example.degreeapp.GardenActivity;
-import com.example.degreeapp.ItemActivity;
-import com.example.degreeapp.MainActivity;
+import com.example.degreeapp.ui.GardenActivity;
+import com.example.degreeapp.ui.ItemActivity;
+import com.example.degreeapp.ui.MainActivity;
 import com.example.degreeapp.R;
 
 import java.util.List;

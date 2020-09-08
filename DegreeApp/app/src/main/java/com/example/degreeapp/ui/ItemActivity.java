@@ -1,4 +1,4 @@
-package com.example.degreeapp;
+package com.example.degreeapp.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.degreeapp.Collection.CollectionActivity;
+import com.example.degreeapp.R;
+import com.example.degreeapp.ui.Collection.CollectionActivity;
 import com.example.degreeapp.Database.Item.Item;
 import com.example.degreeapp.Database.Item.ItemViewModel;
 import com.squareup.picasso.Callback;

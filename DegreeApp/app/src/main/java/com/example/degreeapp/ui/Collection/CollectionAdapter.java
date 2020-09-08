@@ -1,11 +1,9 @@
-package com.example.degreeapp.Collection;
+package com.example.degreeapp.ui.Collection;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.TextView;
 

@@ -1,4 +1,4 @@
-package com.example.degreeapp.Achievements;
+package com.example.degreeapp.ui.Achievements;
 
 import android.util.Log;
 import android.view.LayoutInflater;

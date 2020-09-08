@@ -1,4 +1,4 @@
-package com.example.degreeapp;
+package com.example.degreeapp.ui;
 
 import android.Manifest;
 import android.content.Context;
@@ -28,6 +28,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.example.degreeapp.Database.Item.Item;
 import com.example.degreeapp.Database.Item.ItemViewModel;
+import com.example.degreeapp.R;
 import com.example.degreeapp.Utilities.Const;
 import com.example.degreeapp.Utilities.WeatherCondition;
 import com.example.degreeapp.Volley.JsonUnpacker;

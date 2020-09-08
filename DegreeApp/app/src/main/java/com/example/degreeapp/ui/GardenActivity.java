@@ -1,4 +1,4 @@
-package com.example.degreeapp;
+package com.example.degreeapp.ui;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
@@ -18,7 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.degreeapp.Collection.CollectionActivity;
+import com.example.degreeapp.R;
+import com.example.degreeapp.ui.Collection.CollectionActivity;
 import com.example.degreeapp.Database.Item.Item;
 import com.example.degreeapp.Database.Item.ItemViewModel;
 import com.squareup.picasso.Callback;

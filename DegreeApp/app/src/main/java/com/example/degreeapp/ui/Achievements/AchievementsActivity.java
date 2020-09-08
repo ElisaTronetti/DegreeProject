@@ -1,4 +1,4 @@
-package com.example.degreeapp.Achievements;
+package com.example.degreeapp.ui.Achievements;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.degreeapp.Database.Achievement.Achievement;
 import com.example.degreeapp.Database.Achievement.AchievementViewModel;
-import com.example.degreeapp.MainActivity;
+import com.example.degreeapp.ui.MainActivity;
 import com.example.degreeapp.R;
 
 import java.util.List;

@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:screenOrientation="userLandscape"
             tools:ignore="LockedOrientationActivity">
@@ -29,40 +29,40 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".OptionsActivity"
+            android:name=".ui.OptionsActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:screenOrientation="userLandscape"
             tools:ignore="LockedOrientationActivity">
         </activity>
         <activity
-            android:name=".Achievements.AchievementsActivity"
+            android:name=".ui.Achievements.AchievementsActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:screenOrientation="userLandscape"
             tools:ignore="LockedOrientationActivity">
         </activity>
         <activity
-            android:name=".InformationActivity"
+            android:name=".ui.InformationActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:screenOrientation="userLandscape"
             tools:ignore="LockedOrientationActivity">
         </activity>
         <activity
-            android:name=".GardenActivity"
+            android:name=".ui.GardenActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:screenOrientation="userLandscape"
             tools:ignore="LockedOrientationActivity">
         </activity>
-        <activity android:name=".ScanActivity"
+        <activity android:name=".ui.ScanActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:screenOrientation="userLandscape"
             tools:ignore="LockedOrientationActivity">
         </activity>
-        <activity android:name=".Collection.CollectionActivity"
+        <activity android:name=".ui.Collection.CollectionActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:screenOrientation="userLandscape"
             tools:ignore="LockedOrientationActivity">
         </activity>
-        <activity android:name=".ItemActivity"
+        <activity android:name=".ui.ItemActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:screenOrientation="userLandscape"
             tools:ignore="LockedOrientationActivity">

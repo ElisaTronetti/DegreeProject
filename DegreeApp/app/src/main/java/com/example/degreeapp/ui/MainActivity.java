@@ -1,11 +1,13 @@
-package com.example.degreeapp;
+package com.example.degreeapp.ui;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -15,8 +17,9 @@ import android.view.View;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
-import com.example.degreeapp.Achievements.AchievementsActivity;
-import com.example.degreeapp.Collection.CollectionActivity;
+import com.example.degreeapp.R;
+import com.example.degreeapp.ui.Achievements.AchievementsActivity;
+import com.example.degreeapp.ui.Collection.CollectionActivity;
 import com.example.degreeapp.Database.Achievement.Achievement;
 import com.example.degreeapp.Database.Achievement.AchievementViewModel;
 import com.example.degreeapp.Database.AppRoomDatabase;
@@ -151,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
                                 //setting an achievement unlocked if the conditions are verified
                                 achievement.setUnlocked(true);
                                 achievementViewModel.updateAchievement(achievement);
+                                buildDialog("Grande!", "Hai sbloccato un nuovo trofeo, vai a controllare!");
                             }
                         }
                     }
@@ -202,5 +206,19 @@ public class MainActivity extends AppCompatActivity {
         }
         Log.e("TEST", myPath.getAbsolutePath());
         return myPath.getAbsolutePath();
+    }
+
+    //dialog displayed when an item is returned successfully
+    private void buildDialog(final String title, final String text){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(text);
+        builder.setNegativeButton("Conferma", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
     }
 }
