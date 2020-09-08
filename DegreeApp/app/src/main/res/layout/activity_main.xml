@@ -6,16 +6,16 @@
     android:layout_height="match_parent"
     android:background="@drawable/main_activity_background">
 
-    <Button
+    <ImageView
         android:id="@+id/home_options"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="2dp"
-        android:text="@string/opzioni"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/ic_settings_black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-    </Button>
+    </ImageView>
 
     <ImageView
         android:id="@+id/home_information"
