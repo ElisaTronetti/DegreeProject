@@ -141,24 +141,22 @@ public class MainActivity extends AppCompatActivity {
     private void checkAchievements(){
         itemViewModel.getItemCount().observe(this, new Observer<Integer>() {
             @Override
-            public void onChanged(Integer integer) {
-                if(integer != null){
-                    itemUnlocked = integer;
-                }
-            }
-        });
-        //todo doesn't work!
-        Log.e("TEST", String.valueOf(itemUnlocked));
-        achievementViewModel.getAllAchievements().observe(this, new Observer<List<Achievement>>() {
-            @Override
-            public void onChanged(List<Achievement> achievements) {
-                for(Achievement achievement : achievements){
-                    //unlock item if the requirement is reached
-                    if (!achievement.isUnlocked() &&  itemUnlocked >= Integer.parseInt(achievement.getRequirements())){
-                        //todo update achievement in db!
-                        achievement.setUnlocked(true);
+            public void onChanged(final Integer integer) {
+                achievementViewModel.getAllAchievements().observe(MainActivity.this, new Observer<List<Achievement>>() {
+                    @Override
+                    public void onChanged(List<Achievement> achievements) {
+                        for(Achievement achievement : achievements){
+                            Log.e("TEST", String.valueOf(achievement.isUnlocked()));
+                            Log.e("TEST", integer.toString());
+                            //unlock item if the requirement is reached
+                            if (!achievement.isUnlocked() && integer <= Integer.parseInt(achievement.getRequirements())){
+                                //setting an achievement unlocked if the conditions are verified
+                                achievement.setUnlocked(true);
+                                achievementViewModel.updateAchievement(achievement);
+                            }
+                        }
                     }
-                }
+                });
             }
         });
     }
