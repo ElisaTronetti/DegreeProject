@@ -6,4 +6,5 @@
     <color name="background_actionbar">#87ceeb</color>
     <color name="background_icon">#efebe9</color>
     <color name="background_cardview">#f5f5f5</color>
+    <color name="trophy">#ffd54f</color>
 </resources>
