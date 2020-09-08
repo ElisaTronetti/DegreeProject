@@ -104,4 +104,13 @@ class AchievementRepository {
         }
         return isUnlocked;
     }
+
+    void updateAchievement(final Achievement achievement){
+        AppRoomDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                achievementDAO.updateAchievement(achievement);
+            }
+        });
+    }
 }

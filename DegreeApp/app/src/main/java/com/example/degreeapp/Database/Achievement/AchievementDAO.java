@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -32,4 +33,7 @@ public interface AchievementDAO {
 
     @Query("SELECT COUNT(*) > 0 FROM achievements WHERE unlocked = 1 AND uuid = :uuid")
     boolean isAchievementUnlocked(final String uuid);
+
+    @Update
+    void updateAchievement(final Achievement achievement);
 }

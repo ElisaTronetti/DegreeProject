@@ -49,4 +49,8 @@ public class AchievementViewModel extends AndroidViewModel {
     public boolean isAchievementUnlocked(final String uuid){
         return repository.isAchievementUnlocked(uuid);
     }
+
+    public void updateAchievement(final Achievement achievement){
+        repository.updateAchievement(achievement);
+    }
 }
