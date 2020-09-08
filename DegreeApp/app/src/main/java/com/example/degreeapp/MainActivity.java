@@ -146,8 +146,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onChanged(List<Achievement> achievements) {
                         for(Achievement achievement : achievements){
-                            Log.e("TEST", String.valueOf(achievement.isUnlocked()));
-                            Log.e("TEST", integer.toString());
                             //unlock item if the requirement is reached
                             if (!achievement.isUnlocked() && integer <= Integer.parseInt(achievement.getRequirements())){
                                 //setting an achievement unlocked if the conditions are verified
