@@ -38,7 +38,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GardenActivity extends AppCompatActivity {
-    private static final String FILE_NAME = "garden_conf.txt";
+    private static final String FILE_NAME = "utility.txt";
 
     private ItemViewModel itemViewModel;
     private ConstraintLayout layout;
@@ -221,37 +221,39 @@ public class GardenActivity extends AppCompatActivity {
     //take data from the map to recreate the view
     @SuppressLint("ClickableViewAccessibility")
     private void loadGardenState(){
-            for (Map.Entry<Integer, Pair<Integer, Integer>> entry : itemsCoordinates.entrySet()) {
+        Log.e("TEST", String.valueOf(itemsCoordinates.size()));
+        for (Map.Entry<Integer, Pair<Integer, Integer>> entry : itemsCoordinates.entrySet()) {
 
-                //create image view with the src of the actual item
-                ImageView imageView = new ImageView(this);
-                imageView.setId(entry.getKey());
+            //create image view with the src of the actual item
+            ImageView imageView = new ImageView(this);
+            imageView.setId(entry.getKey());
 
-                Item item = itemViewModel.getItemById(entry.getKey());
-                Picasso.get()
-                        .load(item.getImage_url())
-                        .resize(350,350)
-                        .placeholder(R.drawable.baseline_lock_black_24dp)
-                        .error(R.drawable.baseline_image_not_supported_black_24dp)
-                        .into(imageView, new Callback() {
-                            @Override
-                            public void onSuccess() {
-                                Log.e("PICASSO", "Image garden ok");
-                            }
+            Item item = itemViewModel.getItemById(entry.getKey());
+            File file = new File(item.getImage_url());
+            Picasso.get()
+                    .load(file)
+                    .resize(350,350)
+                    .placeholder(R.drawable.baseline_lock_black_24dp)
+                    .error(R.drawable.baseline_image_not_supported_black_24dp)
+                    .into(imageView, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            Log.e("PICASSO", "Image garden ok");
+                        }
 
-                            @Override
-                            public void onError(Exception e) {
-                                Log.e("PICASSO", "Image garden error");
-                            }
-                        });
+                        @Override
+                        public void onError(Exception e) {
+                            Log.e("PICASSO", "Image garden error");
+                        }
+                    });
 
-                imageView.setOnTouchListener(onTouchListener());
+            imageView.setOnTouchListener(onTouchListener());
 
-                imageView.setX(entry.getValue().first);
-                imageView.setY(entry.getValue().second);
+            imageView.setX(entry.getValue().first);
+            imageView.setY(entry.getValue().second);
 
-                layout.addView(imageView);
-            }
+            layout.addView(imageView);
+        }
     }
 
     private View.OnTouchListener onTouchListener(){
@@ -261,7 +263,7 @@ public class GardenActivity extends AppCompatActivity {
             public boolean onTouch(final View v, MotionEvent event) {
                 final int x = (int) event.getRawX();
                 final int y = (int) event.getRawY();
-                
+
                 //handle the movement of the image view
                 switch (event.getActionMasked()) {
                     case MotionEvent.ACTION_DOWN:
