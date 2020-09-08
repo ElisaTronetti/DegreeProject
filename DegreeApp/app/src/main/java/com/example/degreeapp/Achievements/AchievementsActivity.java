@@ -1,6 +1,9 @@
 package com.example.degreeapp.Achievements;
 
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,11 +15,19 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.example.degreeapp.Database.Achievement.Achievement;
 import com.example.degreeapp.Database.Achievement.AchievementViewModel;
+import com.example.degreeapp.Database.Item.Item;
 import com.example.degreeapp.MainActivity;
 import com.example.degreeapp.R;
+import com.example.degreeapp.Volley.NetworkSingleton;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 public class AchievementsActivity extends AppCompatActivity {
