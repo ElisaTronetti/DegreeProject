@@ -16,6 +16,8 @@ import com.example.degreeapp.Database.Item.ItemViewModel;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+
 public class ItemActivity extends AppCompatActivity {
     private ItemViewModel itemViewModel;
 
@@ -73,8 +75,9 @@ public class ItemActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.item_description)).setText(item.getDescription());
 
         ImageView imageView = findViewById(R.id.item_image);
+        File file = new File(item.getImage_url());
         Picasso.get()
-                .load(item.getImage_url())
+                .load(file)
                 .placeholder(R.drawable.baseline_lock_black_24dp)
                 .error(R.drawable.baseline_image_not_supported_black_24dp)
                 .into(imageView, new Callback() {

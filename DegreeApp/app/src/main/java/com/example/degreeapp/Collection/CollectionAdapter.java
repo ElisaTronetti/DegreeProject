@@ -62,7 +62,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Co
         return items.size();
     }
 
-    public void setItems(final List<Item> items){
+    void setItems(final List<Item> items){
         this.items = items;
         notifyDataSetChanged();
     }

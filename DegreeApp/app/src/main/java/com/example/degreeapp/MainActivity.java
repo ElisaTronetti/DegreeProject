@@ -20,9 +20,7 @@ import com.example.degreeapp.Collection.CollectionActivity;
 import com.example.degreeapp.Database.Achievement.Achievement;
 import com.example.degreeapp.Database.Achievement.AchievementViewModel;
 import com.example.degreeapp.Database.AppRoomDatabase;
-import com.example.degreeapp.Database.Item.Item;
 import com.example.degreeapp.Database.Item.ItemViewModel;
-import com.example.degreeapp.Utilities.ImagesHandler;
 import com.example.degreeapp.Volley.JsonUnpacker;
 import com.example.degreeapp.Volley.NetworkSingleton;
 import com.example.degreeapp.Volley.ServerRequester;
@@ -32,11 +30,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
