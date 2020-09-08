@@ -32,6 +32,10 @@ public class ItemViewModel extends AndroidViewModel {
         return displayed;
     }
 
+    public LiveData<Integer> getItemCount() {
+        return repository.getItemCount();
+    }
+
     public Item getItemById(final int id){
         return repository.getItemById(id);
     }

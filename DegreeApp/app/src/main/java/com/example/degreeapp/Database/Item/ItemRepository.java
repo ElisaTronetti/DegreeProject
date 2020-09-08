@@ -15,6 +15,7 @@ public class ItemRepository {
     private ItemDAO itemDAO;
     private LiveData<List<Item>> items;
     private LiveData<List<Item>> displayed;
+    private int itemCount;
 
     ItemRepository(Application application){
         AppRoomDatabase db = AppRoomDatabase.getDatabase(application);
@@ -29,6 +30,10 @@ public class ItemRepository {
 
     LiveData<List<Item>> getDisplayedItems(){
         return displayed;
+    }
+
+    public LiveData<Integer> getItemCount() {
+        return itemDAO.getItemCount();
     }
 
     long insertItem(final Item item){
