@@ -8,22 +8,32 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="150dp">
+        android:layout_height="150dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp"
+        android:backgroundTint="@color/background_cardview">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/collection_image"
-                android:layout_width="150dp"
-                android:layout_height="match_parent"
-                android:padding="10dp"
-                android:src="@drawable/ic_image_not_supported_black"
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/collection_cardview"
+                android:backgroundTint="@color/background_icon"
+                app:cardCornerRadius="15dp"
+                android:layout_margin="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
-            </androidx.appcompat.widget.AppCompatImageView>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/collection_image"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/ic_image_not_supported_black">
+                </androidx.appcompat.widget.AppCompatImageView>
+            </androidx.cardview.widget.CardView>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/collection_description"
@@ -35,7 +45,7 @@
                 android:textSize="30sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/collection_image"
+                app:layout_constraintStart_toEndOf="@+id/collection_cardview"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.146">
             </androidx.appcompat.widget.AppCompatTextView>
@@ -48,7 +58,7 @@
                 android:text="@string/sbloccato_il"
                 android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/collection_image"
+                app:layout_constraintStart_toEndOf="@+id/collection_cardview"
                 app:layout_constraintTop_toBottomOf="@+id/collection_description">
             </androidx.appcompat.widget.AppCompatTextView>
 
