@@ -32,24 +32,25 @@ public class AchievementsAdapter extends RecyclerView.Adapter<AchievementsAdapte
     @Override
     public void onBindViewHolder(@NonNull AchievementHolder holder, int position) {
         final Achievement currentAchievement = achievements.get(position);
-        File file = new File(currentAchievement.getImage_url());
-        Picasso.get()
-                .load(file)
-                .placeholder(R.drawable.baseline_lock_black_24dp)
-                .error(R.drawable.baseline_image_not_supported_black_24dp)
-                .into(holder.image, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        Log.e("PICASSO", "Image achievement ok");
-                    }
 
-                    @Override
-                    public void onError(Exception e) {
-                        e.printStackTrace();
-                        Log.e("PICASSO", "Image achievement error");
-                    }
-                });
         if(currentAchievement.isUnlocked()){
+            File file = new File(currentAchievement.getImage_url());
+            Picasso.get()
+                    .load(file)
+                    .placeholder(R.drawable.baseline_lock_black_24dp)
+                    .error(R.drawable.baseline_image_not_supported_black_24dp)
+                    .into(holder.image, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            Log.e("PICASSO", "Image achievement ok");
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            e.printStackTrace();
+                            Log.e("PICASSO", "Image achievement error");
+                        }
+                    });
             holder.description.setText(currentAchievement.getTitle());
         }else{
             //handle if the current achievement is currently locked
