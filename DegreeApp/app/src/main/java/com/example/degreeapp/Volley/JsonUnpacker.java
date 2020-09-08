@@ -39,7 +39,7 @@ public class JsonUnpacker {
                         achievementJson.getString("id"),
                         achievementJson.getString("title"),
                         achievementJson.getString("requirement"),
-                        achievementJson.getString("image_url"));
+                        "https://degreeproject.nixo.la/storage/" + achievementJson.getString("image_url"));
                 achievements.add(achievement);
             }
         } catch (JSONException e){
