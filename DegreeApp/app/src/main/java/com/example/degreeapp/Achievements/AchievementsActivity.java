@@ -2,6 +2,7 @@ package com.example.degreeapp.Achievements;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -27,7 +28,6 @@ public class AchievementsActivity extends AppCompatActivity {
         //setting view model, to be able to take data from database
         achievementViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(AchievementViewModel.class);
 
-        initializeDB();
         setUI();
         setButtonsListeners();
 
@@ -61,19 +61,6 @@ public class AchievementsActivity extends AppCompatActivity {
                             | View.SYSTEM_UI_FLAG_FULLSCREEN
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         }
-    }
-
-    //TODO only for debug purposes (delete it when you take data from server!)
-    private void initializeDB(){
-        achievementViewModel.insertAchievement(new Achievement("1", "Achievement1", "no", "no"));
-        achievementViewModel.insertAchievement(new Achievement("2", "Achievement2", "no", "no"));
-        achievementViewModel.insertAchievement(new Achievement("3", "Achievement3", "no", "no"));
-        achievementViewModel.insertAchievement(new Achievement("4", "Achievement4", "no", "no"));
-        achievementViewModel.insertAchievement(new Achievement("5", "Achievement5", "no", "no"));
-        achievementViewModel.insertAchievement(new Achievement("6", "Achievement6", "no", "no"));
-        achievementViewModel.insertAchievement(new Achievement("7", "Achievement7", "no", "no"));
-        achievementViewModel.insertAchievement(new Achievement("8", "Achievement8", "no", "no"));
-        achievementViewModel.insertAchievement(new Achievement("9", "Achievement9", "no", "no"));
     }
 
     private void setButtonsListeners(){
