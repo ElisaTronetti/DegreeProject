@@ -201,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             fos = new FileOutputStream(myPath);
             // Use the compress method on the BitMap object to write image to the OutputStream
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
             try {
                 fos.close();
             } catch (IOException e) {
