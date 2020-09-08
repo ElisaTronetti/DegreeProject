@@ -17,6 +17,7 @@ import com.example.degreeapp.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,10 +36,12 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Co
     public void onBindViewHolder(@NonNull CollectionHolder holder, int position) {
         final Item currentItem = items.get(position);
 
+        File file = new File(currentItem.getImage_url());
+
         holder.description.setText(currentItem.getTitle());
         holder.timestamp.setText(currentItem.getUnlocked_time());
         Picasso.get()
-                .load(currentItem.getImage_url())
+                .load(file)
                 .placeholder(R.drawable.baseline_lock_black_24dp)
                 .error(R.drawable.baseline_image_not_supported_black_24dp)
                 .into(holder.image, new Callback() {
