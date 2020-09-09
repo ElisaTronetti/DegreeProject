@@ -41,8 +41,6 @@ public class MainActivity extends AppCompatActivity {
     private AchievementViewModel achievementViewModel;
     private ItemViewModel itemViewModel;
 
-    private int itemUnlocked;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                                 //setting an achievement unlocked if the conditions are verified
                                 achievement.setUnlocked(true);
                                 achievementViewModel.updateAchievement(achievement);
-                                buildDialog("Grande!", "Hai sbloccato un nuovo trofeo, vai a controllare!");
+                                buildDialog();
                             }
                         }
                     }
@@ -209,10 +207,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //dialog displayed when an item is returned successfully
-    private void buildDialog(final String title, final String text){
+    private void buildDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(title);
-        builder.setMessage(text);
+        builder.setTitle("Grande!");
+        builder.setMessage("Hai sbloccato un nuovo trofeo, vai a controllare!");
         builder.setNegativeButton("Conferma", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

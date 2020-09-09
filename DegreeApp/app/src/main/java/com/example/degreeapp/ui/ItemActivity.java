@@ -20,13 +20,12 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 
 public class ItemActivity extends AppCompatActivity {
-    private ItemViewModel itemViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
-        itemViewModel =  new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(ItemViewModel.class);
+        ItemViewModel itemViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(ItemViewModel.class);
 
         setButtonsListeners();
         Intent intent = getIntent();

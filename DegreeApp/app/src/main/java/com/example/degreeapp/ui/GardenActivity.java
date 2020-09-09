@@ -194,7 +194,7 @@ public class GardenActivity extends AppCompatActivity {
     //read the file to get all the information to build the map
     private void loadDataFromFile(){
         File file = new File(getFilesDir(), FILE_NAME);
-        FileReader fileReader = null;
+        FileReader fileReader;
         try {
             //read file
             fileReader = new FileReader(file);
