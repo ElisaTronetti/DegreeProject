@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -39,7 +40,12 @@ public class CollectionActivity extends AppCompatActivity {
         itemViewModel.getAllItems().observe(this, new Observer<List<Item>>() {
             @Override
             public void onChanged(List<Item> items) {
-                adapter.setItems(items);
+                if(items.size() == 0){
+                    //make a toast if any item has been collected
+                    Toast.makeText(CollectionActivity.this, "Non hai ancora trovato nessun oggetto...", Toast.LENGTH_LONG).show();
+                } else {
+                    adapter.setItems(items);
+                }
             }
         });
 
@@ -105,19 +111,6 @@ public class CollectionActivity extends AppCompatActivity {
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         }
     }
-
-    //TODO only for debug purposes (delete it when you take data from server!)
-    private void initializeDB(){
-        itemViewModel.insertItem(new Item("1", "Item1", "Sono l'item 1", "no", "no"));
-        itemViewModel.insertItem(new Item("2", "Item2", "Sono l'item 2", "no", "no"));
-        itemViewModel.insertItem(new Item("3", "Item3", "Sono l'item 3", "no", "no"));
-        itemViewModel.insertItem(new Item("4", "Item4", "Sono l'item 4", "no", "no"));
-        itemViewModel.insertItem(new Item("5", "Item5", "Sono l'item 5", "no", "no"));
-        itemViewModel.insertItem(new Item("6", "Item6", "Sono l'item 6", "no", "no"));
-        itemViewModel.insertItem(new Item("7", "Item7", "Sono l'item 7", "no", "no"));
-        itemViewModel.insertItem(new Item("8", "Item8", "Sono l'item 8", "no", "no"));
-    }
-
 
     private void setUI(){
         ((TextView) findViewById(R.id.main_title)).setText(R.string.la_mia_collezione);
