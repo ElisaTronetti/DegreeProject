@@ -5,30 +5,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-   <include layout="@layout/widget_app_bar"
-       android:id="@+id/app_bar">
-   </include>
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/widget_app_bar">
+    </include>
 
-    <ImageView
-        android:id="@+id/item_image"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:src="@drawable/ic_image_not_supported_black"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/item_cardview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/background_icon"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_bar"
-        android:layout_margin="20dp"
-        android:padding="20dp">
-    </ImageView>
+        app:layout_constraintVertical_bias="0.0">
+
+        <ImageView
+            android:id="@+id/item_image"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/ic_image_not_supported_black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/app_bar">
+        </ImageView>
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/item_congratulations"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/bravo"
+        android:textSize="25sp"
         android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
-        app:layout_constraintStart_toEndOf="@+id/item_image"
-        app:layout_constraintTop_toTopOf="@+id/item_image"
-        android:layout_margin="10dp">
+        app:layout_constraintStart_toEndOf="@+id/item_cardview"
+        app:layout_constraintTop_toTopOf="@+id/item_cardview"
+        android:layout_margin="10dp"
+        android:paddingBottom="15dp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nome dell'oggetto: "
+        android:textSize="20sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
+        app:layout_constraintStart_toEndOf="@+id/item_cardview"
+        app:layout_constraintTop_toBottomOf="@+id/item_congratulations"
+        android:layout_marginStart="10dp"
+        android:paddingBottom="15dp">
     </TextView>
 
     <TextView
@@ -36,10 +64,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/titolo"
-        app:layout_constraintStart_toEndOf="@+id/item_image"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/item_name"
         app:layout_constraintTop_toBottomOf="@+id/item_congratulations"
         android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
-        android:layout_marginStart="10dp">
+        android:layout_marginStart="5dp"
+        android:paddingBottom="15dp">
     </TextView>
 
     <TextView
@@ -47,7 +77,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Qualità dell'aria registrata: "
-        app:layout_constraintStart_toEndOf="@+id/item_image"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/item_cardview"
         app:layout_constraintTop_toBottomOf="@+id/item_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
         android:layout_marginStart="10dp">
@@ -58,6 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="data"
+        android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/item_air"
         app:layout_constraintTop_toBottomOf="@+id/item_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
@@ -67,17 +99,18 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_margin="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/item_image">
+        app:layout_constraintTop_toBottomOf="@+id/item_cardview">
 
         <TextView
             android:id="@+id/item_description"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
+            android:textSize="20sp"
             android:text="@string/descrizione">
         </TextView>
     </androidx.constraintlayout.widget.ConstraintLayout>
