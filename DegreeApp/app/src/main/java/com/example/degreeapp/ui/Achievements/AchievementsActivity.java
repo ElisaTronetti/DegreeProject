@@ -41,8 +41,12 @@ public class AchievementsActivity extends AppCompatActivity {
         adapter.setOnAchievementClickListener(new AchievementsAdapter.OnAchievementClickListener() {
             @Override
             public void onCollectionItemClickListener(Achievement achievement) {
-                //if the achievement is locked, when clicked it shows how many items you have to find to unlock it
-                if(!achievement.isUnlocked()){
+                if(achievement.isUnlocked()){
+                    Toast.makeText(AchievementsActivity.this,
+                            getString(R.string.thropy_unlocked, String.valueOf(achievement.getRequirements())),
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    //if the achievement is locked, when clicked it shows how many items you have to find to unlock it
                     Toast.makeText(AchievementsActivity.this,
                             getString(R.string.trophy_message, String.valueOf(achievement.getRequirements())),
                             Toast.LENGTH_SHORT).show();
