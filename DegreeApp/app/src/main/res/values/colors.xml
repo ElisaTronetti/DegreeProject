@@ -12,4 +12,7 @@
     <color name="settings">#373737</color>
     <color name="book_main">#321911</color>
     <color name="book_second">#5d4037</color>
+
+    <color name="add_button">#80e27e</color>
+    <color name="delete_button">#ef5350</color>
 </resources>
