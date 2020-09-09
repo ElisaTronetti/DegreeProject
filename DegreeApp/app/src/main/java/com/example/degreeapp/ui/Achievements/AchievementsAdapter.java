@@ -21,6 +21,7 @@ import java.util.List;
 
 public class AchievementsAdapter extends RecyclerView.Adapter<AchievementsAdapter.AchievementHolder>{
     List<Achievement> achievements = new ArrayList<>();
+    OnAchievementClickListener onAchievementClickListener;
 
     @NonNull
     @Override
@@ -69,7 +70,7 @@ public class AchievementsAdapter extends RecyclerView.Adapter<AchievementsAdapte
         notifyDataSetChanged();
     }
 
-    static class AchievementHolder extends RecyclerView.ViewHolder{
+    class AchievementHolder extends RecyclerView.ViewHolder{
         private ImageView image;
         private TextView description;
 
@@ -77,7 +78,26 @@ public class AchievementsAdapter extends RecyclerView.Adapter<AchievementsAdapte
             super(itemView);
             image = itemView.findViewById(R.id.achievement_image);
             description = itemView.findViewById(R.id.achievement_description);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if(onAchievementClickListener != null){
+                        onAchievementClickListener.onCollectionItemClickListener(achievements.get(position));
+                    }
+                }
+            });
         }
+    }
+
+    //used to have a reference to the item in the activity to implement the behavior when
+    //an item card view is clicked
+    public interface OnAchievementClickListener{
+        void onCollectionItemClickListener(Achievement achievement);
+    }
+
+    public void setOnAchievementClickListener(OnAchievementClickListener listener){
+        this.onAchievementClickListener = listener;
     }
 
 }

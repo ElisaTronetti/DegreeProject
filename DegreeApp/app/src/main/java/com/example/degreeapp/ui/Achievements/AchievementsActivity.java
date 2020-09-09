@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -19,13 +20,13 @@ import com.example.degreeapp.R;
 import java.util.List;
 
 public class AchievementsActivity extends AppCompatActivity {
-    private AchievementViewModel achievementViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_achievements);
         //setting view model, to be able to take data from database
-        achievementViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(AchievementViewModel.class);
+        AchievementViewModel achievementViewModel = new ViewModelProvider(this, new ViewModelProvider.
+                AndroidViewModelFactory(getApplication())).get(AchievementViewModel.class);
 
         setUI();
         setButtonsListeners();
@@ -37,9 +38,22 @@ public class AchievementsActivity extends AppCompatActivity {
         final AchievementsAdapter adapter = new AchievementsAdapter();
         recyclerView.setAdapter(adapter);
 
+        adapter.setOnAchievementClickListener(new AchievementsAdapter.OnAchievementClickListener() {
+            @Override
+            public void onCollectionItemClickListener(Achievement achievement) {
+                //if the achievement is locked, when clicked it shows how many items you have to find to unlock it
+                if(!achievement.isUnlocked()){
+                    Toast.makeText(AchievementsActivity.this,
+                            getString(R.string.trophy_message, String.valueOf(achievement.getRequirements())),
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         achievementViewModel.getAllAchievements().observe(this, new Observer<List<Achievement>>() {
             @Override
             public void onChanged(List<Achievement> achievements) {
+                //give all achievements to adapter to populate the view
                 adapter.setAchievements(achievements);
             }
         });
