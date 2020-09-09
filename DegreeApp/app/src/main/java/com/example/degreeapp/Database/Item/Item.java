@@ -16,6 +16,7 @@ public class Item {
     private String description;
     private String image_url;
     private String unlocked_time;
+    private String air_condition;
 
     private boolean displayed;
 
@@ -74,6 +75,14 @@ public class Item {
 
     public void setUnlocked_time(final String unlocked_time) {
         this.unlocked_time = unlocked_time;
+    }
+
+    public String getAir_condition() {
+        return air_condition;
+    }
+
+    public void setAir_condition(String air_condition) {
+        this.air_condition = air_condition;
     }
 
     public boolean isDisplayed() {
