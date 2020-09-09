@@ -1,6 +1,7 @@
 package com.example.degreeapp.ui;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
@@ -14,6 +15,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -48,6 +50,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 public class ScanActivity extends AppCompatActivity {
     private ItemViewModel itemViewModel;
     private ZXingScannerView scannerView;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +92,31 @@ public class ScanActivity extends AppCompatActivity {
         }
     }
 
+    private void setButtonListeners(){
+        findViewById(R.id.scan_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ScanActivity.this, MainActivity.class);
+                ScanActivity.this.startActivity(intent);
+            }
+        });
+        //open dialog to help to understand how scan works
+        findViewById(R.id.scan_help).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ScanActivity.this);
+                builder.setTitle(R.string.help_title);
+                builder.setMessage(R.string.help_description);
+                builder.setPositiveButton(R.string.capito, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                builder.show();
+            }
+        });
+    }
+
     //scan the qr-code with the camera and get the text
     private void starScan() {
         scannerView.setResultHandler(new ZXingScannerView.ResultHandler() {
@@ -96,7 +124,9 @@ public class ScanActivity extends AppCompatActivity {
             public void handleResult(Result rawResult) {
                 //data read from qrcode
                 if (rawResult.getText().equals(Const.QRCODE_TEXT)) {
-                    Log.e("TEST", "Qr code con text corretto");
+                    progressDialog = new ProgressDialog(ScanActivity.this);
+                    progressDialog.setMessage("L'oggetto sta per arrivare, attendi...");
+                    progressDialog.show();
                     getLocationData();
                 } else {
                     //handle qr code error
@@ -123,23 +153,16 @@ public class ScanActivity extends AppCompatActivity {
                 locationManager.requestSingleUpdate(criteria, new LocationListener() {
                     @Override
                     public void onLocationChanged(Location location) {
+                        //get data about the pollution of the air, passing longitude and latitude
                         getAirData(String.valueOf(location.getLongitude()), String.valueOf(location.getLatitude()));
                     }
-
                     @Override
-                    public void onStatusChanged(String provider, int status, Bundle extras) {
-                    }
-
+                    public void onStatusChanged(String provider, int status, Bundle extras) {}
                     @Override
-                    public void onProviderEnabled(String provider) {
-                    }
-
+                    public void onProviderEnabled(String provider) {}
                     @Override
-                    public void onProviderDisabled(String provider) {
-                    }
+                    public void onProviderDisabled(String provider) {}
                 }, null);
-
-
             }
         }
     }
@@ -151,6 +174,7 @@ public class ScanActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 AirCondition currentAirCondition = JsonUnpacker.getWeatherCondition(response);
                 if(currentAirCondition != null){
+                    //get item with the current air condition
                     getItem(currentAirCondition);
                 } else {
                     Log.e("SERV", "Something wrong getting current weather conditions");
@@ -165,60 +189,13 @@ public class ScanActivity extends AppCompatActivity {
         }, longitude, latitude);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode){
-            case Const.CAMERA_REQUEST_CODE:
-                if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    starScan();
-                } else {
-                    Toast.makeText(ScanActivity.this, "Impossibile continuare, accetta i permessi delle camera", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(ScanActivity.this, MainActivity.class);
-                    ScanActivity.this.startActivity(intent);
-                }
-                break;
-            case Const.LOCATION_REQUEST_CODE:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    getLocationData();
-                } else {
-                    Toast.makeText(ScanActivity.this, "Impossibile continuare, accetta i permessi della localizzazione", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(ScanActivity.this, MainActivity.class);
-                    ScanActivity.this.startActivity(intent);
-                }
-        }
-    }
-
-    private void setButtonListeners(){
-        findViewById(R.id.scan_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ScanActivity.this, MainActivity.class);
-                ScanActivity.this.startActivity(intent);
-            }
-        });
-        //open dialog to help to understand how scan works
-        findViewById(R.id.scan_help).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(ScanActivity.this);
-                builder.setTitle(R.string.help_title);
-                builder.setMessage(R.string.help_description);
-                builder.setPositiveButton(R.string.capito, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-                builder.show();
-            }
-        });
-    }
-
+    //request an item to server with the current AirCondition
     private void getItem(final AirCondition airCondition){
         ServerRequester.getItem(new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Item item = JsonUnpacker.getItem(response);
+                progressDialog.dismiss();
                 item.setAir_condition(AirCondition.getDescription(airCondition));
                 if(itemViewModel.getItemByUuid(item.getUuid()) == null){
                     saveImage(item);
@@ -295,5 +272,29 @@ public class ScanActivity extends AppCompatActivity {
         }
         Log.e("TEST", myPath.getAbsolutePath());
         return myPath.getAbsolutePath();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case Const.CAMERA_REQUEST_CODE:
+                if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    starScan();
+                } else {
+                    Toast.makeText(ScanActivity.this, "Impossibile continuare, accetta i permessi delle camera", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(ScanActivity.this, MainActivity.class);
+                    ScanActivity.this.startActivity(intent);
+                }
+                break;
+            case Const.LOCATION_REQUEST_CODE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    getLocationData();
+                } else {
+                    Toast.makeText(ScanActivity.this, "Impossibile continuare, accetta i permessi della localizzazione", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(ScanActivity.this, MainActivity.class);
+                    ScanActivity.this.startActivity(intent);
+                }
+        }
     }
 }
