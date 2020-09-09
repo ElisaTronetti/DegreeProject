@@ -4,14 +4,13 @@ import android.util.Log;
 
 import com.example.degreeapp.Database.Achievement.Achievement;
 import com.example.degreeapp.Database.Item.Item;
-import com.example.degreeapp.Utilities.WeatherCondition;
+import com.example.degreeapp.Utilities.AirCondition;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -71,7 +70,7 @@ public class JsonUnpacker {
         return item;
     }
 
-    public static WeatherCondition getWeatherCondition(final JSONObject jsonObject){
+    public static AirCondition getWeatherCondition(final JSONObject jsonObject){
         try {
             JSONArray data = jsonObject.getJSONArray("data");
             JSONObject specificData = data.getJSONObject(0);
@@ -79,11 +78,11 @@ public class JsonUnpacker {
             String aqi11Value = aqi11.getString("class");
 
             if(Integer.parseInt(aqi11Value) <= 3){
-                return WeatherCondition.BAD;
+                return AirCondition.BAD;
             } else if(Integer.parseInt(aqi11Value) >= 7){
-                return  WeatherCondition.GOOD;
+                return  AirCondition.GOOD;
             } else {
-                return WeatherCondition.MEDIUM;
+                return AirCondition.MEDIUM;
             }
 
         } catch (JSONException e) {

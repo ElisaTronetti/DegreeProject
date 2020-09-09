@@ -148,8 +148,12 @@ public class GardenActivity extends AppCompatActivity {
                 if (deleteMode) {
                     //delete mode active
                     deleteMode = false;
+                    findViewById(R.id.garden_add).setEnabled(true);
                 } else {
+                    //delete mode not active
                     deleteMode = true;
+                    findViewById(R.id.garden_add).setEnabled(false);
+                    Toast.makeText(GardenActivity.this, "Tocca quale elemento vuoi eleminare dal tuo giardino", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -222,9 +226,7 @@ public class GardenActivity extends AppCompatActivity {
     //take data from the map to recreate the view
     @SuppressLint("ClickableViewAccessibility")
     private void loadGardenState(){
-        Log.e("TEST", String.valueOf(itemsCoordinates.size()));
         for (Map.Entry<Integer, Pair<Integer, Integer>> entry : itemsCoordinates.entrySet()) {
-
             //create image view with the src of the actual item
             ImageView imageView = new ImageView(this);
             imageView.setId(entry.getKey());
@@ -316,6 +318,7 @@ public class GardenActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 itemsCoordinates.remove(item.getId());
                 v.setVisibility(View.INVISIBLE);
+                deleteMode = false;
             }
         });
         builder.show();

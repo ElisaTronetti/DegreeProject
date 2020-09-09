@@ -42,14 +42,37 @@
         android:layout_marginStart="10dp">
     </TextView>
 
+    <TextView
+        android:id="@+id/item_air"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Qualità dell'aria registrata: "
+        app:layout_constraintStart_toEndOf="@+id/item_image"
+        app:layout_constraintTop_toBottomOf="@+id/item_title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
+        android:layout_marginStart="10dp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/item_air_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="data"
+        app:layout_constraintStart_toEndOf="@+id/item_air"
+        app:layout_constraintTop_toBottomOf="@+id/item_title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
+        android:layout_marginStart="5dp">
+    </TextView>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/item_image"
-        app:layout_constraintTop_toBottomOf="@+id/item_title"
-        android:layout_marginStart="10dp">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_image">
 
         <TextView
             android:id="@+id/item_description"

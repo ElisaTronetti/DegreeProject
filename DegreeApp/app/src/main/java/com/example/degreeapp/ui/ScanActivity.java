@@ -30,7 +30,7 @@ import com.example.degreeapp.Database.Item.Item;
 import com.example.degreeapp.Database.Item.ItemViewModel;
 import com.example.degreeapp.R;
 import com.example.degreeapp.Utilities.Const;
-import com.example.degreeapp.Utilities.WeatherCondition;
+import com.example.degreeapp.Utilities.AirCondition;
 import com.example.degreeapp.Volley.JsonUnpacker;
 import com.example.degreeapp.Volley.NetworkSingleton;
 import com.example.degreeapp.Volley.ServerRequester;
@@ -149,9 +149,9 @@ public class ScanActivity extends AppCompatActivity {
         ServerRequester.getWeatherConditions(new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                WeatherCondition currentWeatherCondition = JsonUnpacker.getWeatherCondition(response);
-                if(currentWeatherCondition != null){
-                    getItem(currentWeatherCondition);
+                AirCondition currentAirCondition = JsonUnpacker.getWeatherCondition(response);
+                if(currentAirCondition != null){
+                    getItem(currentAirCondition);
                 } else {
                     Log.e("SERV", "Something wrong getting current weather conditions");
                 }
@@ -214,11 +214,12 @@ public class ScanActivity extends AppCompatActivity {
         });
     }
 
-    private void getItem(final WeatherCondition weatherCondition){
+    private void getItem(final AirCondition airCondition){
         ServerRequester.getItem(new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Item item = JsonUnpacker.getItem(response);
+                item.setAir_condition(AirCondition.getDescription(airCondition));
                 if(itemViewModel.getItemByUuid(item.getUuid()) == null){
                     saveImage(item);
                     buildDialog("Bravo!", "Hai trovato " + item.getTitle() + ", è stato aggiunto alla tua collezione.");
@@ -233,7 +234,7 @@ public class ScanActivity extends AppCompatActivity {
                 error.printStackTrace();
                 Log.e("SERV", "Get item server error");
             }
-        }, weatherCondition.getName());
+        }, airCondition.getName());
     }
 
     //dialog displayed when an item is returned successfully

@@ -74,6 +74,7 @@ public class ItemActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.main_title)).setText(item.getTitle());
         ((TextView) findViewById(R.id.item_title)).setText(item.getTitle());
         ((TextView) findViewById(R.id.item_description)).setText(item.getDescription());
+        ((TextView) findViewById(R.id.item_air_data)).setText(item.getAir_condition());
 
         ImageView imageView = findViewById(R.id.item_image);
         File file = new File(item.getImage_url());
