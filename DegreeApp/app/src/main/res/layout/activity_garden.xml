@@ -15,11 +15,11 @@
         android:background="@drawable/garden_background">
     </ImageView>
 
-    <Button
+    <ImageView
         android:id="@+id/garden_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/indietro"
+        android:layout_width="109dp"
+        android:layout_height="54dp"
+        android:src="@drawable/back_arrow_2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
