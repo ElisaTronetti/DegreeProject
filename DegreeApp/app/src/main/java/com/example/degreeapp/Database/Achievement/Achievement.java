@@ -13,11 +13,11 @@ public class Achievement {
 
     private String uuid;
     private String title;
-    private String requirements;
+    private int requirements;
     private String image_url;
     private boolean unlocked;
 
-    public Achievement(final String uuid, final String title, final String requirements, final String image_url) {
+    public Achievement(final String uuid, final String title, final int requirements, final String image_url) {
         this.uuid = uuid;
         this.title = title;
         this.requirements = requirements;
@@ -49,11 +49,11 @@ public class Achievement {
         this.title = title;
     }
 
-    public String getRequirements() {
+    public int getRequirements() {
         return requirements;
     }
 
-    public void setRequirements(String requirements) {
+    public void setRequirements(int requirements) {
         this.requirements = requirements;
     }
 

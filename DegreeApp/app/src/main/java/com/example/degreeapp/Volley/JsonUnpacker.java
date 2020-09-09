@@ -33,11 +33,11 @@ public class JsonUnpacker {
             jsonArray = jsonObject.getJSONArray("achievements");
             for(int i = 0; i < jsonArray.length(); i++){
                 JSONObject achievementJson = jsonArray.getJSONObject(i);
-
+                int requirement = Integer.parseInt(achievementJson.getString("requirement"));
                 Achievement achievement = new Achievement(
                         achievementJson.getString("id"),
                         achievementJson.getString("title"),
-                        achievementJson.getString("requirement"),
+                        requirement,
                         "https://degreeproject.nixo.la/storage/" + achievementJson.getString("image_url"));
                 achievements.add(achievement);
             }
