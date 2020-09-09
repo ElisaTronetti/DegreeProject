@@ -22,8 +22,8 @@ public class AchievementViewModel extends AndroidViewModel {
         locked = repository.getLockedAchievements();
     }
 
-    public long insertAchievement(final Achievement achievement){
-        return repository.insertAchievement(achievement);
+    public void insertAchievement(final Achievement achievement){
+        repository.insertAchievement(achievement);
     }
 
     public LiveData<List<Achievement>> getAllAchievements() {

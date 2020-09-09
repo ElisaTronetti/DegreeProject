@@ -20,4 +20,5 @@
     <string name="sbloccato_il">Sbloccato il:</string>
     <string name="tempo">Tempo</string>
     <string name="elimina">Elimina</string>
+    <string name="trophy_message">Per sbloccare questo trofeo dei trovare %1$s elementi</string>
 </resources>
