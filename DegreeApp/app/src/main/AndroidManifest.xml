@@ -67,6 +67,8 @@
             android:screenOrientation="userLandscape"
             tools:ignore="LockedOrientationActivity">
         </activity>
+        <receiver android:name=".ui.AlarmReceiver">
+        </receiver>
     </application>
 
 </manifest>

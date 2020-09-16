@@ -18,14 +18,12 @@ public class Item {
     private String unlocked_time;
     private String air_condition;
 
-    private boolean displayed;
 
     public Item(final String uuid, final String title, final String description, final String image_url, final String unlocked_time){
         this.uuid = uuid;
         this.title = title;
         this.description = description;
         this.image_url = image_url;
-        this.displayed = false;
         this.unlocked_time = unlocked_time;
     }
 
@@ -83,13 +81,5 @@ public class Item {
 
     public void setAir_condition(String air_condition) {
         this.air_condition = air_condition;
-    }
-
-    public boolean isDisplayed() {
-        return displayed;
-    }
-
-    public void setDisplayed(final boolean displayed) {
-        this.displayed = displayed;
     }
 }

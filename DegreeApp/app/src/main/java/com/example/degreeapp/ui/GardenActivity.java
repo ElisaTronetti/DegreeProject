@@ -319,6 +319,7 @@ public class GardenActivity extends AppCompatActivity {
                 itemsCoordinates.remove(item.getId());
                 v.setVisibility(View.INVISIBLE);
                 deleteMode = false;
+                findViewById(R.id.garden_add).setEnabled(true);
             }
         });
         builder.show();

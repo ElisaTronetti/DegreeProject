@@ -11,13 +11,11 @@ import java.util.List;
 public class ItemViewModel extends AndroidViewModel {
     private ItemRepository repository;
     private LiveData<List<Item>> items;
-    private LiveData<List<Item>> displayed;
 
     public ItemViewModel(@NonNull Application application) {
         super(application);
         repository = new ItemRepository(application);
         items = repository.getAllItems();
-        displayed = repository.getDisplayedItems();
     }
 
     public long insertItem(final Item item){
@@ -26,10 +24,6 @@ public class ItemViewModel extends AndroidViewModel {
 
     public LiveData<List<Item>> getAllItems(){
         return items;
-    }
-
-    public LiveData<List<Item>> getDisplayedItems(){
-        return displayed;
     }
 
     public LiveData<Integer> getItemCount() {
