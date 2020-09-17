@@ -25,6 +25,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 Log.e("NOT", "Notification");
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "notify")
                         .setSmallIcon(R.drawable.ic_help_outline_black)
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(description))
                         .setContentTitle("Ricorda che...")
                         .setContentText(description)
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT);
