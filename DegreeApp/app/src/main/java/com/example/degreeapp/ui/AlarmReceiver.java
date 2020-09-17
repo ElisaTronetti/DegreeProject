@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -18,16 +19,14 @@ public class AlarmReceiver extends BroadcastReceiver {
     public void onReceive(final Context context, Intent intent) {
 
         Bundle bundle = intent.getExtras();
-        Log.e("TEST", "ok1");
         if (bundle != null) {
-            Log.e("TEST", "ok2");
             String description = bundle.getString("text");
             if (description != null) {
-                Log.e("TEST", description);
+                Log.e("NOT", "Notification");
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "notify")
                         .setSmallIcon(R.drawable.ic_help_outline_black)
-                        .setContentTitle("HI")
-                        .setContentText("description")
+                        .setContentTitle("Ricorda che...")
+                        .setContentText(description)
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT);
                 NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
 
@@ -35,4 +34,6 @@ public class AlarmReceiver extends BroadcastReceiver {
             }
         }
     }
+
+
 }
