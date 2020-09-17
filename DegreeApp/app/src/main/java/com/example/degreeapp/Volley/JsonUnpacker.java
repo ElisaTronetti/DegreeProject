@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.degreeapp.Database.Achievement.Achievement;
 import com.example.degreeapp.Database.Item.Item;
+import com.example.degreeapp.Database.Quote.Quote;
 import com.example.degreeapp.Utilities.AirCondition;
 
 import org.json.JSONArray;
@@ -46,6 +47,24 @@ public class JsonUnpacker {
             Log.e("VOLLEY", "Error unpacking achievements");
         }
         return achievements;
+    }
+
+    public static List<Quote> getQuotes(final JSONObject jsonObject){
+        JSONArray jsonArray;
+        List<Quote> quotes = new ArrayList<>();
+        try {
+            jsonArray = jsonObject.getJSONArray("quotes");
+            for(int i = 0; i < jsonArray.length(); i++){
+                JSONObject quoteJson = jsonArray.getJSONObject(i);
+                Quote quote = new Quote(quoteJson.getString("id"),
+                        quoteJson.getString("text"));
+                quotes.add(quote);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.e("VOLLEY", "Error unpacking quotes");
+        }
+        return quotes;
     }
 
     /**

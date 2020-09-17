@@ -13,6 +13,6 @@ public interface QuoteDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     long insertQuote(final Quote quote);
 
-    @Query("SELECT * FROM quote")
-    LiveData<List<Quote>> getAllQuotes();
+    @Query("SELECT * FROM quotes")
+    List<Quote> getRandomQuote();
 }

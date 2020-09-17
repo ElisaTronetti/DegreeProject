@@ -2,9 +2,10 @@ package com.example.degreeapp.Database.Quote;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(tableName = "quotes", indices = {@Index(value = {"uuid"}, unique = true)})
 public class Quote {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "quote_id")

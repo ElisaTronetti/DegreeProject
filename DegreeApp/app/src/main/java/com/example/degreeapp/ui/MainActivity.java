@@ -2,6 +2,7 @@ package com.example.degreeapp.ui;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -24,6 +25,8 @@ import android.view.View;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
+import com.example.degreeapp.Database.Quote.Quote;
+import com.example.degreeapp.Database.Quote.QuoteViewModel;
 import com.example.degreeapp.R;
 import com.example.degreeapp.ui.Achievements.AchievementsActivity;
 import com.example.degreeapp.ui.Collection.CollectionActivity;
@@ -43,12 +46,14 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
     public AppRoomDatabase db;
     private AchievementViewModel achievementViewModel;
     private ItemViewModel itemViewModel;
+    private QuoteViewModel quoteViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +64,10 @@ public class MainActivity extends AppCompatActivity {
 
         achievementViewModel =  new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(AchievementViewModel.class);
         itemViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(ItemViewModel.class);
+        quoteViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(QuoteViewModel.class);
 
         NetworkSingleton.getInstance(getApplicationContext());
+        getQuotes();
         getAchievements();
         checkAchievements();
 
@@ -150,6 +157,24 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void getQuotes(){
+        ServerRequester.getQuotes(new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                List<Quote> quotes = JsonUnpacker.getQuotes(response);
+                for(Quote quote : quotes){
+                    quoteViewModel.insertQuote(quote);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                Log.e("SERV", "Error getting quotes");
+            }
+        });
+    }
+
     private void checkAchievements(){
         itemViewModel.getItemCount().observe(this, new Observer<Integer>() {
             @Override
@@ -233,16 +258,21 @@ public class MainActivity extends AppCompatActivity {
 
     //sets alarm daily at 10 am
     private void setAlarm(){
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
+        String description = quoteViewModel.getRandomQuote().getDescription();
         Intent intent = new Intent(MainActivity.this, AlarmReceiver.class);
+        intent.putExtra("text", description);
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 12);
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.add(Calendar.SECOND, 5);
 
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, AlarmManager.INTERVAL_FIFTEEN_MINUTES, AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 5000, pendingIntent);
+
+
     }
 
 }

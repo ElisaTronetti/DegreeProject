@@ -15,14 +15,13 @@ public class QuoteViewModel extends AndroidViewModel {
     public QuoteViewModel(@NonNull Application application) {
         super(application);
         repository = new QuoteRepository(application);
-        quotes = repository.getAllQuotes();
     }
 
     public void insertQuote(final Quote quote){
         repository.insertQuote(quote);
     }
 
-    public LiveData<List<Quote>> getAllQuotes() {
-        return quotes;
+    public Quote getRandomQuote() {
+        return repository.getRandomQuote();
     }
 }
