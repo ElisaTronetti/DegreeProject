@@ -10,6 +10,7 @@ import com.example.degreeapp.Database.Achievement.Achievement;
 import com.example.degreeapp.Database.Achievement.AchievementDAO;
 import com.example.degreeapp.Database.Item.Item;
 import com.example.degreeapp.Database.Item.ItemDAO;
+import com.example.degreeapp.Database.Quote.QuoteDAO;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -20,6 +21,7 @@ public abstract class AppRoomDatabase extends RoomDatabase {
     //get dao reference
     public abstract AchievementDAO achievementDAO();
     public abstract ItemDAO itemDAO();
+    public abstract QuoteDAO quoteDAO();
 
     //Singleton instance
     private static volatile AppRoomDatabase INSTANCE;
