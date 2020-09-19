@@ -80,4 +80,13 @@ public class ItemRepository {
         return itemSelected;
     }
 
+    void updateItem(final Item item){
+        AppRoomDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                itemDAO.updateItem(item);
+            }
+        });
+    }
+
 }

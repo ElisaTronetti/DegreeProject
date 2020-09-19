@@ -37,4 +37,8 @@ public class ItemViewModel extends AndroidViewModel {
     public Item getItemByUuid(final String uuid){
         return repository.getItemByUuid(uuid);
     }
+
+    public void updateItem(final Item item){
+        repository.updateItem(item);
+    }
 }

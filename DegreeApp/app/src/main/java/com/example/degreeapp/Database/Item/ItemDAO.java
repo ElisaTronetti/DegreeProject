@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -24,4 +25,7 @@ public interface ItemDAO {
 
     @Query("SELECT COUNT(item_id) FROM items")
     LiveData<Integer> getItemCount();
+
+    @Update
+    void updateItem(final Item item);
 }
