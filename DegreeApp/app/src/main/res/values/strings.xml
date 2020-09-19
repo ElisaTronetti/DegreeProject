@@ -22,4 +22,5 @@
     <string name="elimina">Elimina</string>
     <string name="trophy_message">Per sbloccare questo trofeo dei trovare %1$s elementi</string>
     <string name="thropy_unlocked">Hai già collezionato %1$s elementi, il trofeo è sbloccato</string>
+    <string name="informations">BENVENUTO!\n\nLo scopo di questa applicazione è di renderti più consapevole dell\'impatto ambientale che puoi avere nel mondo.\nOgni volta che andrai alla fermata dell\'autobus troverai un QR Code: potrai inquadrarlo con l\'applicazione e ti permetterà di sbloccare tanti premi con i quali potrai giocare nel tuo giardino personale.\n\nTrovali tutti!</string>
 </resources>

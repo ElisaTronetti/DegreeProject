@@ -30,6 +30,7 @@ import com.example.degreeapp.Database.Item.Item;
 import com.example.degreeapp.Database.Quote.Quote;
 import com.example.degreeapp.Database.Quote.QuoteViewModel;
 import com.example.degreeapp.R;
+import com.example.degreeapp.Utilities.AirCondition;
 import com.example.degreeapp.ui.Achievements.AchievementsActivity;
 import com.example.degreeapp.ui.Collection.CollectionActivity;
 import com.example.degreeapp.Database.Achievement.Achievement;
@@ -81,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
         checkAchievements();
 
         createNotificationChannel();
-        setAlarm();
     }
 
     //This is used to hide/show 'Status Bar' & 'System Bar'. Swipe bar to get it as visible.
@@ -168,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
                 for(Quote quote : quotes){
                     quoteViewModel.insertQuote(quote);
                 }
+                setAlarm();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -306,12 +307,13 @@ public class MainActivity extends AppCompatActivity {
 
             DateFormat df = DateFormat.getDateInstance(DateFormat.LONG, Locale.ITALY);
 
-            //add the default item in database
-            itemViewModel.insertItem(new Item("default",
-                    "Io",
+            Item item = new Item("default", "Io",
                     "Questo sei tu! Puoi cambiare il tuo personaggio dalla schermata delle informazioni",
                     url,
-                    df.format(new Date())));
+                    df.format(new Date()));
+            item.setAir_condition("La qualità dell'aria in questa zona è buona!");
+            //add the default item in database
+            itemViewModel.insertItem(item);
 
             //starts information activity
             startActivity(new Intent(MainActivity.this, InformationActivity.class));

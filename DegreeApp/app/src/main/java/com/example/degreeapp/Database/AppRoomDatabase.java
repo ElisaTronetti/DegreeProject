@@ -16,7 +16,7 @@ import com.example.degreeapp.Database.Quote.QuoteDAO;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Achievement.class, Item.class, Quote.class}, version = 26, exportSchema = false)
+@Database(entities = {Achievement.class, Item.class, Quote.class}, version = 27, exportSchema = false)
 public abstract class AppRoomDatabase extends RoomDatabase {
 
     //get dao reference

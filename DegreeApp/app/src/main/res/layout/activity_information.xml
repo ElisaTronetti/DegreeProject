@@ -47,7 +47,7 @@
             android:id="@+id/information_info"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Benvenuto! Lo scopo di quest'applicazione è di renderti più consapevole dell'impatto ambientale che puoi avere nel mondo. Ogni volta che andrai alla fermata dell'autobus troverai un QR Code: potrai inquadrarlo con l'applicazione e ti permetterà di sbloccare tanti premi con i quali potrai giocare nel tuo giardino personale. Trovali tutti!"
+            android:text="@string/informations"
             android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
             android:textSize="25sp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
