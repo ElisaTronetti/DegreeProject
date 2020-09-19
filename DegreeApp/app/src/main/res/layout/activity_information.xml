@@ -9,13 +9,45 @@
         android:id="@+id/app_bar">
     </include>
 
-    <TextView
-        android:id="@+id/textView3"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/information_cardview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/informazioni"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/background_icon"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar"
+        app:layout_constraintVertical_bias="0.0">
+
+        <ImageView
+            android:id="@+id/information_image"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/boy"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/app_bar">
+        </ImageView>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+        app:layout_constraintStart_toEndOf="@+id/information_cardview"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar">
+
+        <TextView
+            android:id="@+id/information_info"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Benvenuto! Lo scopo di quest'applicazione è di renderti più consapevole dell'impatto ambientale che puoi avere nel mondo. Ogni volta che andrai alla fermata dell'autobus troverai un QR Code: potrai inquadrarlo con l'applicazione e ti permetterà di sbloccare tanti premi con i quali potrai giocare nel tuo giardino personale. Trovali tutti!"
+            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
+            android:textSize="25sp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
