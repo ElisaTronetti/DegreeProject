@@ -15,4 +15,9 @@
 
     <color name="add_button">#80e27e</color>
     <color name="delete_button">#ef5350</color>
+
+    <color name="qr_code">#ffa726</color>
+
+    <color name="female">#ffc1e3</color>
+    <color name="male">#bbdefb</color>
 </resources>
