@@ -16,6 +16,7 @@ import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -25,6 +26,7 @@ import android.view.View;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
+import com.example.degreeapp.Database.Item.Item;
 import com.example.degreeapp.Database.Quote.Quote;
 import com.example.degreeapp.Database.Quote.QuoteViewModel;
 import com.example.degreeapp.R;
@@ -43,8 +45,11 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Random;
 
@@ -58,13 +63,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        setButtonsListeners();
+
         db = AppRoomDatabase.getDatabase(this);
 
         achievementViewModel =  new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(AchievementViewModel.class);
         itemViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(ItemViewModel.class);
         quoteViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(QuoteViewModel.class);
+
+        checkFirstStart();
+
+        setContentView(R.layout.activity_main);
+        setButtonsListeners();
 
         NetworkSingleton.getInstance(getApplicationContext());
         getQuotes();
@@ -92,13 +101,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setButtonsListeners(){
-        findViewById(R.id.home_options).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, OptionsActivity.class);
-                MainActivity.this.startActivity(intent);
-            }
-        });
         findViewById(R.id.home_achievements).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -287,5 +289,34 @@ public class MainActivity extends AppCompatActivity {
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
+    }
+
+    //checks if the app has been started for the first time
+    private void checkFirstStart(){
+        boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                .getBoolean("isFirstRun", true);
+
+        if (isFirstRun) {
+            //save in internal storage the avatar images
+            Bitmap boyImage = BitmapFactory.decodeResource(getResources(),R.drawable.boy);
+            String url = saveImageToInternalStorage("boy", boyImage);
+
+            Bitmap girlImage = BitmapFactory.decodeResource(getResources(),R.drawable.girl);
+            saveImageToInternalStorage("girl", girlImage);
+
+            DateFormat df = DateFormat.getDateInstance(DateFormat.LONG, Locale.ITALY);
+
+            //add the default item in database
+            itemViewModel.insertItem(new Item("default",
+                    "Io",
+                    "Questo sei tu! Puoi cambiare il tuo personaggio dalla schermata delle informazioni",
+                    url,
+                    df.format(new Date())));
+
+            //starts information activity
+            startActivity(new Intent(MainActivity.this, InformationActivity.class));
+        }
+        getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
+                .putBoolean("isFirstRun", false).apply();
     }
 }
